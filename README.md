@@ -2,6 +2,8 @@
 
 My (attempted) solutions to [Advent of Code 2020](https://adventofcode.com/2020) in Elixir.
 
+<img width="967" alt="image" src="https://user-images.githubusercontent.com/498229/100191430-6fc5be80-2f33-11eb-8a96-21d87c503c74.png">
+
 ## Strategy
 
 If this year is like 2018, the last time I did this, each problem will be split into multiple parts.
