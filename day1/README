@@ -30,3 +30,5 @@ E.g.
 
   for i <- list, j <- list, k <- list, do: ...
 
+However, can't short-circuit comprehensions, so maybe recursion was a good choice after all 🤷‍♂️
+
