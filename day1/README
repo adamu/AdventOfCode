@@ -1,6 +1,25 @@
 Day 1 Notes
 
+------
 Part1:
+------
 
 $ elixir day1part1.exs
 618 x 1402 = 866436
+
+Thoughts:
+
+Avoid iterating seen elements by consuming the list, and comparing each list element only to the remaining
+elements.
+
+------
+Part2:
+------
+
+$ elixir day1part2.exs
+547 x 545 x 928 = 276650720
+
+Thoughts:
+
+Use a comprehension over two versions of the remaining list to efficiently compare the three items.
+
