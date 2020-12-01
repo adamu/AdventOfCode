@@ -32,3 +32,10 @@ E.g.
 
 However, can't short-circuit comprehensions, so maybe recursion was a good choice after all 🤷‍♂️
 
+Tried it out, and turned out that while it doesn't short-circuit, it's still pretty quick. So I added
+day1refactored.exs with the simpler implementation.
+
+$ elixir day1refactored.exs
+Part1: 618 x 1402 = 866436
+Part2: 928 x 547 x 545 = 276650720
+
