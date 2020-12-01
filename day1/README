@@ -23,3 +23,10 @@ Thoughts:
 
 Use a comprehension over two versions of the remaining list to efficiently compare the three items.
 
+Would have been simpler to use a comprehension for all 3 elements (and for the 2 elements from part 1)
+rather than using recursion for the outer loop.
+
+E.g.
+
+  for i <- list, j <- list, k <- list, do: ...
+
