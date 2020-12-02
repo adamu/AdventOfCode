@@ -26,3 +26,6 @@ No xor operator without importing Bitwise? Just write it manually.
 Initially misread the problem - thought first position must match, and second position must not match,
 which caused some confusion.
 Probably rebound to the same variable names a bit too much - should work on clearer variable names.
+
+After reading the elixir forum thread, String.at would have been fine for Part 2.
+https://elixirforum.com/t/advent-of-code-2020-day-2
