@@ -13,7 +13,7 @@ Use a regex to parse the input
 Huh, can't iterate a string with Enum. Split into a list with String.graphemes/1
 
 ------
-Part1:
+Part2:
 ------
 
 $ elixir day2part2.exs
