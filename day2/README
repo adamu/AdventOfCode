@@ -29,3 +29,5 @@ Probably rebound to the same variable names a bit too much - should work on clea
 
 After reading the elixir forum thread, String.at would have been fine for Part 2.
 https://elixirforum.com/t/advent-of-code-2020-day-2
+
+Also feel pretty dumb that I didn't realise bool != bool is effectively xor
