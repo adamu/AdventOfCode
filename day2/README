@@ -1,0 +1,28 @@
+Day 2 Notes
+
+------
+Part1:
+------
+
+$ elixir day2part1.exs
+414
+
+Thoughts:
+
+Use a regex to parse the input
+Huh, can't iterate a string with Enum. Split into a list with Enum.graphemes/1
+
+------
+Part1:
+------
+
+$ elixir day2part2.exs
+413
+
+Thoughts:
+
+Convert indices to be zero-based.
+No xor operator without importing Bitwise? Just write it manually.
+Initially misread the problem - thought first position must match, and second position must not match,
+which caused some confusion.
+Probably rebound to the same variable names a bit too much - should work on clearer variable names.
