@@ -6,14 +6,14 @@ My (attempted) solutions to [Advent of Code 2020](https://adventofcode.com/2020)
 
 ## Strategy
 
-If this year is like 2018, the last time I did this, each problem will be split into multiple parts.
-Later parts can result in considerable refactoring of earlier parts, so I will split each part into its own file, like this:
+If this year is like 2018, the last time I did this, each problem will be split into two parts.
+The second part can result in considerable refactoring of the first part, so I will split each part into its own file, like this:
 
 * `day1/`
-  * `day1.exs` (when the solution is only in one part)
-* `day2/`
-  * `day2part1.exs`
-  * `day2part2.exs`
+  * `day1part1.exs` - solution to part 1
+  * `day1part2.exs` - solution to part 2
+  * `README` - my summary and notes relating to the day's problem
+  * `input` - input file downloaded from Advent of Code (if applicable)
 
 If I get stuck, my instinct is to be persistent and take as long as it takes to solve the problem.
 However I think this year I don't want the pressure of days piling up and this is supposed to be fun,
