@@ -32,3 +32,5 @@ Use Enum.take_every/2 to skip unneeded rows for y velocity.
 
 Pretty simple, because Stream.cycle/2 takes care of the tricky bit.
 Thankfully I answered part 1 in a way that made part 2 just a small change to add Enum.take_every/2.
+In part 1, was tracking the travelled distance in antipication for part 2, but turns out it wasn't needed,
+so stopped tracking the y value in the accumulator for part 2.
