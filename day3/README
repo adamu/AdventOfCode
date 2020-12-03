@@ -1,0 +1,34 @@
+Day 3 Notes
+
++--------+
+| Part 1 |
++--------|
+
+$ elixir day3part1.exs
+Travelled (969, 323) and encountereed 270 trees
+
+Thoughts:
+
+Input repeats, so use Stream.cycle/2.
+Need to keep track of the x-offset, pass it to Enum.at/2.
+
+
++--------+
+| Part 2 |
++--------|
+
+$ elixir day3part2.exs
+2122848000
+
+Thoughts:
+
+Modify original answer to take x and y velocity.
+Can just pass x velocity in as before.
+Use Enum.take_every/2 to skip unneeded rows for y velocity.
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Pretty simple, because Stream.cycle/2 takes care of the tricky bit.
+Thankfully I answered part 1 in a way that made part 2 just a small change to add Enum.take_every/2.
