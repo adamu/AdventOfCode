@@ -1,0 +1,47 @@
+Day 4 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day4part1.exs
+210
+
+Thoughts:
+
+Parse each passport into a list of key-value pairs, and extract the keys.
+Not sure if there will be extra keys, so store required keys in a Mapset, which means I can use
+MapSet.subset to make sure all the required keys are present.
+Embedded enums are kind of ugly.
+Nice usage of Enum.into, IMO 🍠.
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day4part2.exs
+131
+
+Thoughts:
+
+Need the values too now, so refactor a bit to preserve them, storing each passport at a map.
+Can still use part 1 logic to filter out passports that have missing keys.
+ - just pull out the keys and convert to a MapSet as before.
+Delete the cid key if present, since needs to be ignored.
+
+Validation code:
+Mostly just implementing the spec.
+Use regex for fiddly requirements.
+hgt was a bit annoying, really wanted to fail-fast if the regex failed to match the units,
+maybe will come back to that and think of a nicer way later.
+For valid?: Is there a nicer way to call a bunch of functions with the same argument and
+aggregate their results? 🤔
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Starting to take me longer now, about an hour for this one.
+Ended up not using Enum.reduce here, but every time I do use it I forget the order of the
+acc/item pair in the reducer function... 😩
