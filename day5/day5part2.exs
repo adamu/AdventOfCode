@@ -35,6 +35,18 @@ defmodule Day5Part2 do
 
     row * 8 + col
   end
+
+  # ALTERNATIVE PARSER ADDED AFTER READING OTHER SUBMISSIONS
+  # The boarding pass is actually just a binary number, so we can parse it as such directly.
+  # (The *8 above is eqivalent to the 3-bit shift to the left)
+  def char_to_bit(c) when c in 'FL', do: <<0::1>>
+  def char_to_bit(c) when c in 'BR', do: <<1::1>>
+
+  def seat_id_bitstring(boarding_pass \\ "FBFBBFFRLR") do
+    boarding_pass = String.trim(boarding_pass)
+    <<id::integer-10>> = for <<char <- boarding_pass>>, into: <<>>, do: char_to_bit(char)
+    id
+  end
 end
 
 Day5Part2.run()
