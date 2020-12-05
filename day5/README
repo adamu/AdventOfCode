@@ -1,0 +1,44 @@
+Day 5 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day5part1.exs
+906
+
+Thoughts:
+Could do something clever with binaries or the Bitwise module?
+The number of rows is even (128), but we're zero-indexed (0-127), so how to deal with calculating half?
+- in binary, can just shift one bit. But again, we need to halve a range (e.g. 32 to 63) so not sure
+  how to do that.
+
+Instead of storing the range, I decided to store the current "front" seat, and how many rows back to count.
+Then we can work with 128 which divides by two without worrying about rounding problems.
+
+When there are only two seats left, just return the correct one based on the flag.
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day5part2.exs
+519
+
+Thoughts:
+
+Not really sure what the missing front/back seats was about. Decided just to just compare the sorted list
+with itself shifted by one (by zipping them), and finding the first ID without a next ID, and assume
+the next ID is my seat.
+That turned out to be the right answer.
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Looking forward to seeing how others implemented the seat ID parsing.
+Did a lot of refactoring here but the end result, especially for part 2, is pretty clean I think.
+Even if I decided to refactor the parser, it can just be swapped in for part 2. Zipping was a nice idea.
+
+I quite enjoyed this one, maybe because it's a Saturday and I wasn't burnt out from work :-)
