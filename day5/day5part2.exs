@@ -1,6 +1,4 @@
 defmodule Day5Part2 do
-  use Bitwise
-
   def run do
     File.stream!("input")
     |> Stream.map(&seat_id/1)
