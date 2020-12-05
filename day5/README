@@ -42,3 +42,19 @@ Did a lot of refactoring here but the end result, especially for part 2, is pret
 Even if I decided to refactor the parser, it can just be swapped in for part 2. Zipping was a nice idea.
 
 I quite enjoyed this one, maybe because it's a Saturday and I wasn't burnt out from work :-)
+
+** Update **
+
+After reading the Elixir Forum thread: https://elixirforum.com/t/advent-of-code-2020-day-5/35997/
+
+I really had to have a go at just parsing the boarding pass directly into an integer. I said I wouldn't
+commit code to my solutions after reading forums, so I'll add it here instead :-) It converts each
+character to a bit on the fly, and interprets the result as a 10-bit integer. 🦾
+
+  def char_to_bit(c) when c in 'FL', do: <<0::1>>
+  def char_to_bit(c) when c in 'BR', do: <<1::1>>
+
+  def seat_id_bitstring(boarding_pass \\ "FBFBBFFRLR") do
+    <<id::integer-10>> = for <<char <- boarding_pass>>, into: <<>>, do: char_to_bit(char)
+    id
+  end
