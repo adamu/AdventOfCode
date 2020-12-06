@@ -20,4 +20,5 @@ However I think this year I don't want the pressure of days piling up and this i
 so I will probably limit each problem to one day, and then come back to those that I had problems with later.
 
 **No checking other people's solutions** until I've solved it myself - or otherwise given up.
-I will not check in code that was written as a result of seeing other people's solutions or reading forums, etc.
+If I make any refinements as a result of seeing other people's solutions or reading forums, etc., I will
+commit them to a separate file to leave the original version in tact.
