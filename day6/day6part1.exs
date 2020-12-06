@@ -5,9 +5,9 @@ defmodule Day6Part1 do
     |> Stream.map(fn group ->
       group
       |> Enum.join()
-      |> String.split("", trim: true)
+      |> String.to_charlist()
       |> Enum.frequencies()
-      |> Map.delete("\n")
+      |> Map.delete(?\n)
       |> Enum.count()
     end)
     |> Enum.sum()
