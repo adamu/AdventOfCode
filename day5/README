@@ -45,10 +45,16 @@ I quite enjoyed this one, maybe because it's a Saturday and I wasn't burnt out f
 
 ** Update **
 
-After reading the Elixir Forum thread: https://elixirforum.com/t/advent-of-code-2020-day-5/35997/
+After reading the Elixir Forum thread (https://elixirforum.com/t/advent-of-code-2020-day-5/35997/),
+I really had to have a go at just parsing the boarding pass directly into an integer, so I added
+simplified versions as day5part1-bitstring.exs and day5part2-bitstring.exs
 
-I really had to have a go at just parsing the boarding pass directly into an integer. I said I wouldn't
-commit code to my solutions after reading forums, but as long as it's clearly labelled, I think it's fine.
+They use this bitstring-comprehension:
+
+    <<id::10>> = for <<char <- boarding_pass>>, into: <<>>, do: char_to_bit(char)
+
+    def char_to_bit(c) when c in 'FL', do: <<0::1>>
+    def char_to_bit(c) when c in 'BR', do: <<1::1>>
 
 It converts each character to a bit on the fly, and interprets the result as a 10-bit integer. 🦾
 
