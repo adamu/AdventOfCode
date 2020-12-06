@@ -10,7 +10,7 @@ $ elixir day6part1.exs
 Thoughts:
 
 So far I've read the whole file into memory. I initially did that here to get the answer 
-quickly to preserve my Leaderboard position 🌟, butthen refactored to use File.stream!
+quickly to preserve my leaderboard position 🌟, but then refactored to use File.stream!
 to parse the file line-by-line.
 
 This meant using Stream.chunk_by to sort into groups.
