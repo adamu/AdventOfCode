@@ -44,3 +44,12 @@ most notable thing here?
 
 I wonder if there's a more effective way to parse the stream dynamically and also strip off
 the new lines?
+
+** Update **
+
+From other people's answers, taking the intersection of all the replies was the best way
+to implement this. Makes sense.
+
+I think I'm succumbing to pressure to complete quickly due to the leaderboard, and just
+going with whatever works rather than reading the question properly and working out
+what it's *really* asking.
