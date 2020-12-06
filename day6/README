@@ -9,6 +9,13 @@ $ elixir day6part1.exs
 
 Thoughts:
 
+So far I've read the whole file into memory. I initially did that here to get the answer 
+quickly to preserve my Leaderboard position 🌟, butthen refactored to use File.stream!
+to parse the file line-by-line.
+
+This meant using Stream.chunk_by to sort into groups.
+Join all the answers together, and use Enum.frequencies/1 to count all the answers (discarding
+newlines).
 
 +--------+
 | Part 2 |
@@ -19,9 +26,21 @@ $ elixir day6part2.exs
 
 Thoughts:
 
+Not stripping the newlines came in handy here, because I could use them to count how
+many people are in each group. Then I could just count the frequencies that were answered
+by the whole group, and finally sum those results.
+
 
 +------------------+
 | Overall Thoughts |
 +------------------+
 
+I didn't get an accurate time for this one due to having lunch between parts 1 and 2 🍝.
+Got the answer under an hour including lunch, but more like two hours including streaming
+the file and tidying up.
 
+Using Map.pop/2 to remove an element and return its value at the same time is probably the
+most notable thing here?
+
+I wonder if there's a more effective way to parse the stream dynamically and also strip off
+the new lines?
