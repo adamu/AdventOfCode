@@ -1,0 +1,27 @@
+Day 6 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day6part1.exs
+6585
+
+Thoughts:
+
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day6part2.exs
+3276
+
+Thoughts:
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+
