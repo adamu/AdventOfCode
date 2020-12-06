@@ -1,13 +1,13 @@
 defmodule Day6Part1 do
   def run do
-    File.read!("input")
-    |> String.trim()
-    |> String.split("\n\n")
+    File.stream!("input")
+    |> Stream.chunk_by(&(&1 == "\n"))
     |> Stream.map(fn group ->
       group
-      |> String.replace("\n", "")
+      |> Enum.join()
       |> String.split("", trim: true)
       |> Enum.frequencies()
+      |> Map.delete("\n")
       |> Enum.count()
     end)
     |> Enum.sum()

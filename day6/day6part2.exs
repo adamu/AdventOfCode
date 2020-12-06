@@ -1,19 +1,13 @@
 defmodule Day6Part2 do
   def run do
-    File.read!("input")
-    |> String.trim()
-    |> String.split("\n\n")
+    File.stream!("input")
+    |> Stream.chunk_by(&(&1 == "\n"))
     |> Stream.map(fn group ->
-      count =
-        group
-        |> String.to_charlist()
-        |> Enum.count(&(&1 == ?\n))
-        |> Kernel.+(1)
+      frequencies = group |> Enum.join() |> String.split("", trim: true) |> Enum.frequencies()
 
-      group
-      |> String.replace("\n", "")
-      |> String.split("", trim: true)
-      |> Enum.frequencies()
+      count = frequencies["\n"]
+
+      Map.delete(frequencies, "\n")
       |> Enum.count(fn {_, v} -> v == count end)
     end)
     |> Enum.sum()
