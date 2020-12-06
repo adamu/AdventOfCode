@@ -3,12 +3,14 @@ defmodule Day6Part2 do
     File.stream!("input")
     |> Stream.chunk_by(&(&1 == "\n"))
     |> Stream.map(fn group ->
-      frequencies = group |> Enum.join() |> String.to_charlist() |> Enum.frequencies()
+      {count, frequencies} =
+        group
+        |> Enum.join()
+        |> String.to_charlist()
+        |> Enum.frequencies()
+        |> Map.pop(?\n)
 
-      count = frequencies[?\n]
-
-      Map.delete(frequencies, ?\n)
-      |> Enum.count(fn {_, v} -> v == count end)
+      Enum.count(frequencies, fn {_, v} -> v == count end)
     end)
     |> Enum.sum()
     |> IO.puts()
