@@ -1,0 +1,39 @@
+Day 7 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day7part1.exs
+142
+
+Thoughts:
+
+First parse the input to a map of node => children, reprensenting requirement tree.
+The question is to find the ancestors, so invert the tree.
+Use MapSet to avoid duplicates.
+Don't need the child count, but keep it around just in case.
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day7part2.exs
+10219
+
+Thoughts:
+
+Good job I kept the child count around.
+Don't need the inverted tree anymore, but can use the uninverted tree from part 1.
+Just walk the tree counting the children as we go.
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+🎄 Trees 🎄
+
+Wondering if my use of MapSet for the inverted tree was overkill, simpler way?
+I *think* I got the fundamental idea of this one, rather than just hacking together whatever works,
+but seeing the other answers will be the judge of that :-)
