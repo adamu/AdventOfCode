@@ -16,8 +16,7 @@ defmodule Day7Part2 do
 
   def input_to_tree(input) do
     input
-    |> String.trim(".\n")
-    |> String.split(".\n")
+    |> String.split(".\n", trim: true)
     |> Enum.map(&String.split(&1, " bags contain "))
     |> Map.new(fn [parent, child_spec] -> {parent, parse_children(child_spec)} end)
   end
