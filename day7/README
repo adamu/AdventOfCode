@@ -37,3 +37,7 @@ Just walk the tree counting the children as we go.
 Wondering if my use of MapSet for the inverted tree was overkill, simpler way?
 I *think* I got the fundamental idea of this one, rather than just hacking together whatever works,
 but seeing the other answers will be the judge of that :-)
+
+** Update **
+
+I should have said DAG rather than tree, as each node can have multiple parents.
