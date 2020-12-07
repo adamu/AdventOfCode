@@ -4,13 +4,13 @@ defmodule Day7Part2 do
   def run do
     File.read!("input")
     |> input_to_tree()
-    |> count_children("shiny gold")
+    |> count_descendants("shiny gold")
     |> IO.puts()
   end
 
-  def count_children(tree, name) do
+  def count_descendants(tree, name) do
     Enum.reduce(tree[name], 0, fn {size, child_name}, count ->
-      count + size + size * count_children(tree, child_name)
+      count + size + size * count_descendants(tree, child_name)
     end)
   end
 
