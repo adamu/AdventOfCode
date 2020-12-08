@@ -9,7 +9,7 @@ defmodule Day8Part1 do
   def input_to_instrs(input) do
     input
     |> String.split("\n", trim: true)
-    |> Enum.map(&Regex.run(~r/\A(\w{3}) ([+\-]\d+)\z/, &1, capture: :all_but_first))
+    |> Enum.map(&String.split/1)
     |> Enum.with_index()
     |> Map.new(fn {[op, arg], idx} -> {idx, {op, String.to_integer(arg)}} end)
   end
