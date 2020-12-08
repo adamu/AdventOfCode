@@ -21,16 +21,11 @@ defmodule Day7Part2 do
     |> Map.new(fn [parent, child_spec] -> {parent, parse_children(child_spec)} end)
   end
 
-  def parse_children(child_spec) when is_binary(child_spec) do
+  def parse_children("no other bags"), do: []
+
+  def parse_children(child_spec) do
     child_spec
     |> String.split(", ")
-    |> parse_children()
-  end
-
-  def parse_children(["no other bags"]), do: []
-
-  def parse_children(list) do
-    list
     |> Enum.map(&Regex.run(@bag_spec, &1, capture: :all_but_first))
     |> Enum.map(fn [count, type] -> {String.to_integer(count), type} end)
   end

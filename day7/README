@@ -9,7 +9,7 @@ $ elixir day7part1.exs
 
 Thoughts:
 
-First parse the input to a map of node => children, reprensenting requirement tree.
+First parse the input to a map of node => children, representing the requirement tree.
 The question is to find the ancestors, so invert the tree.
 Use MapSet to avoid duplicates.
 Don't need the child count, but keep it around just in case.
