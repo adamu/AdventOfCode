@@ -14,6 +14,7 @@ defmodule Day7Part2 do
     end)
   end
 
+  # %{"shiny gold" => [{5, "pale brown"}, {2, "light red"}, {3, "drab lime"}]}
   def input_to_tree(input) do
     input
     |> String.split(".\n", trim: true)

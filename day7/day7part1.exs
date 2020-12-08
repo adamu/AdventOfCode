@@ -20,6 +20,7 @@ defmodule Day7Part1 do
     end
   end
 
+  # %{"shiny gold" => ["pale magenta", "striped tomato", ...]}
   def invert_tree(tree) do
     Enum.reduce(tree, %{}, fn {parent, children}, inverted_tree ->
       Enum.reduce(children, inverted_tree, fn {_n, child}, inverted_tree ->
@@ -28,6 +29,7 @@ defmodule Day7Part1 do
     end)
   end
 
+  # %{"shiny gold" => [{5, "pale brown"}, {2, "light red"}, {3, "drab lime"}]}
   def input_to_tree(input) do
     input
     |> String.split(".\n", trim: true)
