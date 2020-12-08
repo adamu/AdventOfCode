@@ -1,0 +1,41 @@
+Day 8 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day8part1.exs
+1528
+
+Thoughts:
+
+Loop detection. Have a feeling I'm supposed to detect patterns, but I decided to just store the
+index of every instruction executed, and stop as soon as we visit a previously-seen instruction.
+
+A little bit annoyed about using an if/else statement for the terminating condition. I would have
+preferred to use pattern matching, but I'm not sure that's possible with a MapSet.
+
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day8part2.exs
+640
+
+Thoughts:
+
+Adapt the algorithm from part 1 to also detect when the last command has been executed (when the
+0-based index is the same as the number of commands). Renamed run_until_loop → try_boot
+
+Iterate through all the commands, toggling each one and try executing the program to see if it completes.
+Could technically skip the acc commands, but decided to just leave them in to keep the code simpler.
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+I was a little concerned that this would be slow, due to it being O(n²) - togging each instruction in turn,
+then executing the full instruction set, however there are only ~600 instructions, so it completes
+pretty quickly.
