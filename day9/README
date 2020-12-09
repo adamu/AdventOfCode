@@ -1,0 +1,52 @@
+Day 9 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day9part1.exs
+18272118
+
+Thoughts:
+
+Searching inside a sliding window.
+
+Tricky to write efficiently in an immutable language.
+I knew what I wanted to do, but working out how to write that took a lot of thought.
+The solution completes in just over 1ms, so I'm pretty happy with it.
+
+Every time the window slides, I decided to sort it, which means I could take the following shortcuts:
+* When selecting the first number in the pair, stop early if added to the first number in the preamble it's
+  greater than the target, because we know the rest of the numbers are also too large.
+* Similarly can do the same when checking for the second number in the pair.
+* Avoids comparing pairs we already compared.
+
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day9part2.exs
+2186361
+
+Thoughts:
+
+Initially hard-coded the answer from part 1, but then decided to re-use part one and pass it as an
+input to keep the solution fully dynamic.
+
+Similar to part 1, but now we have to check an unknown number of adjacent items. Again stop checking each
+group as soon as the sum is too big, and move to the next group.
+
+This answer also completes in about a millisecond (not including part 1).
+
+P.S. I accidentally copied part 1 over part 2 after solving this, and had to write the solution again 🤦🏼‍♂️
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+The most challenging thing here was working out how to write it in an immutable, recursive way cleanly.
+I was considering using the :array module, but I think I managed to get everything working nicely with
+lists without the need to do lots of expensive list-indexing. Pretty sure both answers are O(nlogn).
+
+Probably will tidy up this more later, especailly Part 1, but done for now.
