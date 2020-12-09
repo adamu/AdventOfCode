@@ -19,7 +19,7 @@ Every time the window slides, I decided to sort it, which means I could take the
 * When selecting the first number in the pair, stop early if added to the first number in the preamble it's
   greater than the target, because we know the rest of the numbers are also too large.
 * Similarly can do the same when checking for the second number in the pair.
-* Avoids comparing pairs we already compared.
+* Avoids comparing pairs we already compared, by only searching from the location of the first value onwards.
 
 
 +--------+
