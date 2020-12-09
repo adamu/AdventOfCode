@@ -50,7 +50,6 @@ defmodule Day9Part1 do
   end
 
   def sum_in_preamble?([], _max, _number), do: false
-
   def sum_in_preamble?([preamble_head | _], max, _number) when preamble_head >= max, do: false
 
   def sum_in_preamble?([preamble_head | preamble_rest], max, number) do
@@ -61,11 +60,10 @@ defmodule Day9Part1 do
     end
   end
 
-  def forms_pair?(_, [y | _], max, _number) when y > max, do: false
-
-  def forms_pair?(x, preamble_rest, _max, number) do
-    Enum.any?(preamble_rest, fn y -> x + y == number end)
-  end
+  def forms_pair?(_x, [y | _], max, _number) when y > max, do: false
+  def forms_pair?(_x, [], _max, _number), do: false
+  def forms_pair?(x, [y | _], _max, number) when x + y == number, do: true
+  def forms_pair?(x, [_y | rest], max, number), do: forms_pair?(x, rest, max, number)
 end
 
 Day9Part2.run()
