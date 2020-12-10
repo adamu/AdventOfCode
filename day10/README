@@ -37,13 +37,13 @@ forms a directed graph, where the weight of each node inherits the weight of all
 For the example case (excuse my ascii drawing skills):
 
 0(1)-1(1)-4(1)-5(1)-|
-           |  ` |   |
+           |  \ |   |
            |---6(2) |
            |    |   |
            |---7(4)-|
                 |
                10(4)-11(4)
-                   ` |
+                   \ |
                      12(8)-18(8)-19(8)
 
 So just need to make an algorithm that builds this graph, by iterating the sorted list
