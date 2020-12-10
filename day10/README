@@ -1,0 +1,37 @@
+Day 10 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day10part1.exs
+**solved - will add answer after part 2 is complete**
+
+Thoughts:
+
+Noticed that the questions rely on you finding some insight into the data, rather than just
+implementing exactly what the instructions say.
+
+In this case, we just need to sort the data, and compute the difference between all the pairs.
+
+
++-------------------+
+| Part 2 [UNSOLVED] |
++-------------------+
+
+$ elixir day10part2.exs
+...
+
+Thoughts:
+
+So far defeated on this one. I'm obviously missing a fundamental trick.
+
+I went down a massive rabbit hold calculating combinations, which didn't pay off.
+Will leave this for now, and maybe come back to it later.
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Not committing the input for now, in case somebody decides to @ me my answer or something.
