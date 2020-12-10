@@ -5,7 +5,7 @@ Day 10 Notes
 +--------+
 
 $ elixir day10part1.exs
-**solved - will add answer after part 2 is complete**
+2450
 
 Thoughts:
 
@@ -15,23 +15,47 @@ implementing exactly what the instructions say.
 In this case, we just need to sort the data, and compute the difference between all the pairs.
 
 
-+-------------------+
-| Part 2 [UNSOLVED] |
-+-------------------+
++--------+
+| Part 2 |
++--------+
 
 $ elixir day10part2.exs
-...
+32396521357312
 
 Thoughts:
 
-So far defeated on this one. I'm obviously missing a fundamental trick.
+Fudge me this took me a long time (hours, including a walk in the park...)
 
-I went down a massive rabbit hold calculating combinations, which didn't pay off.
-Will leave this for now, and maybe come back to it later.
+I spent far too long trying to find a mathematical answer based on combinations, and went down
+another rabbit hole identifying the "removable" items and then trying to calculate the answer
+based on that information.
 
+Turns out the trick I was missing is graph theory.
+
+Finally, after drawing out the example on paper, I realised that the number of combinations
+forms a directed graph, where the weight of each node inherits the weight of all its parents.
+For the example case (excuse my ascii drawing skills):
+
+0(1)-1(1)-4(1)-5(1)-|
+           |  ` |   |
+           |---6(2) |
+           |    |   |
+           |---7(4)-|
+                |
+               10(4)-11(4)
+                   ` |
+                     12(8)-18(8)-19(8)
+
+So just need to make an algorithm that builds this graph, by iterating the sorted list
+and checking the next 3 elements, keeping track of the weights as we go. It's actually simpler
+than that, because we don't need to keep the connections around, just the weightings for each node.
+
+Finally, the weight of the max joltage adapter is the answer.
 
 +------------------+
 | Overall Thoughts |
 +------------------+
 
-Not committing the input for now, in case somebody decides to @ me my answer or something.
+Part 1 was very easy, part 2 was fiendish. Glad this wasn't an interview question. Sometimes my
+brain just doesn't process certain types of problem. This was one of them. Once I made the
+connection to a weighted graph it was fine.
