@@ -35,3 +35,6 @@ Could look into a more efficient solution, but I didn't find the problem that in
 so will leave it here.
 
 What's a nice way to track/visualise a coordinate grid in Elixir? 🤔
+
+What's more interesting is how the input data is generated. How were the inputs generated that they
+would become stable, and what's the relationship between parts 1 and 2 for the same data?
