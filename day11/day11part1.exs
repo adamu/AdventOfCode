@@ -5,52 +5,47 @@ defmodule Day11Part1 do
     |> Enum.map(&String.to_charlist/1)
     |> parse_seat_plan()
     |> run_until_stable()
-    |> elem(2)
     |> count_occupied()
     |> IO.inspect()
   end
 
-  def run_until_stable(state) do
-    new_state = tick(state)
+  def run_until_stable(seats) do
+    new_seats = tick(seats)
 
-    if new_state == state do
-      state
+    if new_seats == seats do
+      seats
     else
-      run_until_stable(new_state)
+      run_until_stable(new_seats)
     end
   end
 
-  def tick({width, height, old_seats}) do
-    new_seats =
-      for(
-        x <- 0..(width - 1),
-        y <- 0..(height - 1),
-        do: {x, y}
-      )
-      |> Enum.reduce(%{}, fn {x, y}, new_seats ->
-        toggle(old_seats[{x, y}], x, y, old_seats, new_seats)
-      end)
-
-    {width, height, new_seats}
+  def tick(seats) do
+    Map.new(seats, fn {{x, y}, old_seat} -> toggle(old_seat, x, y, seats) end)
   end
 
-  def toggle(:empty, x, y, old_seats, new_seats) do
-    if occupied_adjacent(x, y, old_seats) == 0 do
-      Map.put(new_seats, {x, y}, :occupied)
-    else
-      Map.put(new_seats, {x, y}, :empty)
-    end
+  def toggle(:empty, x, y, seats) do
+    new_value =
+      if occupied_adjacent(x, y, seats) == 0 do
+        :occupied
+      else
+        :empty
+      end
+
+    {{x, y}, new_value}
   end
 
-  def toggle(:occupied, x, y, old_seats, new_seats) do
-    if occupied_adjacent(x, y, old_seats) >= 4 do
-      Map.put(new_seats, {x, y}, :empty)
-    else
-      Map.put(new_seats, {x, y}, :occupied)
-    end
+  def toggle(:occupied, x, y, seats) do
+    new_value =
+      if occupied_adjacent(x, y, seats) >= 4 do
+        :empty
+      else
+        :occupied
+      end
+
+    {{x, y}, new_value}
   end
 
-  def toggle(:floor, x, y, _, new_seats), do: Map.put(new_seats, {x, y}, :floor)
+  def toggle(:floor, x, y, _), do: {{x, y}, :floor}
 
   def occupied_adjacent(x, y, seats) do
     adjacent = [
@@ -74,37 +69,24 @@ defmodule Day11Part1 do
   end
 
   def parse_seat_plan(input) do
-    Enum.reduce(input, {0, 0, %{}}, fn row, {_x, y, seats} ->
-      {x, seats} =
-        Enum.reduce(row, {0, seats}, fn seat, {x, seats} ->
-          seat =
-            case seat do
-              ?L -> :empty
-              ?. -> :floor
-            end
+    {_, seats} =
+      Enum.reduce(input, {0, %{}}, fn row, {y, seats} ->
+        {_, seats} =
+          Enum.reduce(row, {0, seats}, fn seat, {x, seats} ->
+            seat =
+              case seat do
+                ?L -> :empty
+                ?. -> :floor
+                ?# -> :occupied
+              end
 
-          {x + 1, Map.put(seats, {x, y}, seat)}
-        end)
+            {x + 1, Map.put(seats, {x, y}, seat)}
+          end)
 
-      {x, y + 1, seats}
-    end)
-  end
+        {y + 1, seats}
+      end)
 
-  def visualize({width, height, seats}) do
-    for y <- 0..(height - 1) do
-      for x <- 0..(width - 1) do
-        char =
-          case seats[{x, y}] do
-            :empty -> "L"
-            :floor -> "."
-            :occupied -> "#"
-          end
-
-        IO.write(char)
-      end
-
-      IO.write("\n")
-    end
+    seats
   end
 end
 
