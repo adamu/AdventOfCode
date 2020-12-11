@@ -52,6 +52,12 @@ than that, because we don't need to keep the connections around, just the weight
 
 Finally, the weight of the max joltage adapter is the answer.
 
+** Update **
+
+I added day10part2-refactored.exs, which contains a commented and arguably easier to understand
+version that uses Enum.reduce instead of so much recursion. However, in benchmarks it was
+negligibly (~1 microsecond) slower, so I decided to leave the original version in place.
+
 +------------------+
 | Overall Thoughts |
 +------------------+
