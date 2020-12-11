@@ -1,0 +1,37 @@
+Day 11 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day11part1.exs
+2238
+
+Pretty simple brute force that just iterates the full grid, checking the surrounding
+seats for each case.
+
+The main point seemed to be that the state was calculated immediately, which means
+we need to keep the original state around while building the new state.
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day11part2.exs
+2013
+
+Added check_visible_in_direction to check the full line of sight, rather than just the
+adjacent squares, and converted occupied_adjacent to occupied_visible to take advantage
+of the new function.
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Naive, kind of slow brute-force techniques today.
+
+Could look into a more efficient solution, but I didn't find the problem that interesting
+so will leave it here.
+
+What's a nice way to track/visualise a coordinate grid in Elixir? 🤔
