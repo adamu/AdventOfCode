@@ -1,0 +1,47 @@
+Day 12 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day12part1.exs
+923
+
+Thoughts:
+
+This was pretty fun :-)
+
+I spent ages fixing stupid typos and didn't realise I'd forgotten to take account for the fact that
+a rotation command could contain more than 90 degrees. I submitted so many wrong answers I had to
+wait 3 minutes to submit the correct  one... oops.
+
+Decided to store the direction as an {x, y} vector, and handle rotations as just flipping the
+values as required. Use recursion to do it repetedly for rotations of more than 90 degrees.
+
+NSEW operations are just simply adjusting the coordinates as required.
+
+For F, apply the vector to the boat's current position.
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day12part2.exs
+24769
+
+Thoughts:
+
+Interesting. The fact that the waypoint moves when the boat moves makes this part very simple.
+
+Thankfully I stored the rotation as a vector in part 1, which is basically the waypoint
+fixed at a distance of 1. So for this part, can just adjust the NSEW commands to move the
+waypoint/vector instead of the boat.
+
+The rest of the commands are the same.
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+I liked this one. Figuring out how to do the rotation efficiently probably took the most time,
+but I'm pretty happy with the results 😊
