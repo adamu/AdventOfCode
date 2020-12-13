@@ -1,0 +1,52 @@
+Day 13 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day13part1.exs
+<will add later>
+
+Thoughts:
+
+Pretty easy.
+Filter out the x items, divide the current time by the bus ID, and the remainder is how many
+minutes to wait. Take the minimum.
+
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day13part2.exs
+*runs forever*
+
+Thoughts:
+
+Another one that's impossible to brute force. Currently stuck.
+Have created a correct algorithm that produces the correct answer for the examples.
+However, it will never complete for the real input.
+
+There must be some other relationship that I'm missing. Maybe something to do with common factors?
+
+Attempted to improve by starting with the multiple of all the ids and searching downwards, but
+that doesn't complete either (I'm not interested in brute-force, so won't let it run for a long
+time).
+
+Wondering if the fact that three of the examples use the same IDs and differ only in offset
+is important.
+
+Going to come back to this later with a clear mind. Not sure I'll get it without a hint.
+Seems like I have a knowledge gap.
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Doesn't really feel like a "coding" problem, because I implemented the algorithm but there's
+obviously another trick. But will judge that once I know the answer.
+
+Working out things from first principles is hard! But I think the thought process is more
+valuable than just getting the right answer. So far I've been a bit competitive due to the
+private leaderboards, but I guess that ends now.
