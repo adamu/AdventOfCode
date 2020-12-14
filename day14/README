@@ -5,8 +5,20 @@ Day 14 Notes
 +--------+
 
 $ elixir day14part1.exs
+12135523360904
 
 Thoughts:
+
+Bitmasking.
+
+Not sure if I missed something here. Since the mask bits overwrite the value, we could
+just copy the bits. But I decided to implement it with real bitmasking, so I *think*
+it is necessary to split the mask into two seperate masks - one containing the 1s which
+will be ORed to set the bits, and another containing the 0s will will be ANDed to unset
+the bits.
+
+When parsing the file, convert the mask into the and and or masks, then when
+executing the parsed instructions, apply the masks as necessary.
 
 
 +--------+
@@ -14,12 +26,43 @@ Thoughts:
 +--------+
 
 $ elixir day14part2.exs
+2741969047858
 
 Thoughts:
+
+OK. This requires quite a re-write of part 1. Now the Xs in the mask represent
+floating values. We need to permute all the possible floating values, then substitute
+those into the result.
+
+I wasted a lot of time misreading the question, by replacing the values in the mask
+*before* applying the mask to the memory address. But the question requires the mask
+to be applied first, and then replace the values in the masked result. Reworking ensues.
+
+This got a bit long so decided to split the file parsing logic into its own module.
+
+Parser Module
+Parses the file, and produces the "mask" along with the indices that contained the X bits.
+Can't perform the substitution at this stage, because it has to be applied to the
+masked value.
+
+Day14Part2 Module
+Runs the main logic. For each mask, applies it to the value, permutes the options
+nd subsitutes the relevant bits.
+
+I was unsure whether it was better to compute all the permuted bits ahead of time in the
+parsing stage, or do it on demand each time we apply a mask. Decided to do it on demand,
+because it keeps the data that is being passed around simpler - the mask can just
+store the X indices, rather than all the permuted replacement values.
+
 
 
 +------------------+
 | Overall Thoughts |
 +------------------+
 
+Enjoyed this one. Was great to get the experience of working with binaries as integer
+values rather than strings. Getting used to working with the <<>> syntax, although it
+took me a long time to work it all out.
 
+Especially for Part 2 - generating permutations by counting in binary was pretty
+fun, but completely unnecessary. :-)
