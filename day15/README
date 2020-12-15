@@ -1,0 +1,43 @@
+Day 15 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day15.exs 2020
+253
+
+Thoughts:
+
+Separate function to set the initial state.
+Store the last two round numbers for each answer.
+If it's the first time, store the same round number twice, which results in 0
+when subtracted.
+
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day15.exs 30000000
+13710
+
+Thoughts:
+
+I'm not sure if this was supposed to be brute-forcible.
+
+I think it is and that I designed the algorithm efficiently in the first part.
+The answer is a bit slow, but that's probably due to all the map updates. Using
+a more efficient data structure would probably speed it up - guessing this is
+faster in mutable languages.
+
+Anyway, no code changes here, so for this excercise I decided to combine the
+two answers, and just specify the last round via the command-line.
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Did this one pretty quickly. May even have time to go back to day 13 and learn
+about the Chinese Remainder Theorem...
