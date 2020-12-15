@@ -1,4 +1,4 @@
-defmodule Day15Part1 do
+defmodule Day15 do
   @input [18, 8, 0, 5, 4, 1, 20]
 
   def run do
@@ -27,4 +27,4 @@ defmodule Day15Part1 do
   end
 end
 
-Day15Part1.run()
+Day15.run()
