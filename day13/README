@@ -21,6 +21,9 @@ minutes to wait. Take the minimum.
 $ elixir day13part2.exs
 *runs forever*
 
+$ elixir day13part2-cheating.exs
+741745043105674
+
 Thoughts:
 
 Another one that's impossible to brute force. Currently stuck.
@@ -38,6 +41,15 @@ is important.
 
 Going to come back to this later with a clear mind. Not sure I'll get it without a hint.
 Seems like I have a knowledge gap.
+
+** Update 16 Dec - 3 days later **
+
+I did lots of reading into the Chinese Remainder Theorem, but wasn't able to work out
+how to apply that here. I'm giving in and asking for help. Voltone on Elixir Forum had
+the answer, so I adapted it to my program and it outputted the right answer - so I'm
+claiming the star :P, although I'm not going to claim I solved this, so I added that
+version to day13part2-cheating.exs with credit. Will definitely come back to this to
+understand it properly.
 
 
 +------------------+
