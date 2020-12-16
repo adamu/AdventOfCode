@@ -9,47 +9,44 @@ $ elixir day16part1.exs
 
 Thoughts:
 
+Slightly complex input to parse this time. Most of the solution is parsing.
+The actual logic: Use Enum.any?(rules) to check if a ticket satisfies any of the rules.
+Filter those results by only those that are not valid.
+Flat map the filtered tickets, to get a flat list of fields.
+Sum the result.
+
 
 +--------+
 | Part 2 |
 +--------+
 
 $ elixir day16part2.exs
-Idenfitied columns: %{
-  "arrival location" => 18,
-  "arrival platform" => 12,
-  "arrival station" => 10,
-  "arrival track" => 7,
-  "class" => 15,
-  "departure date" => 11,
-  "departure location" => 2,
-  "departure platform" => 13,
-  "departure station" => 14,
-  "departure time" => 1,
-  "departure track" => 9,
-  "duration" => 0,
-  "price" => 5,
-  "route" => 16,
-  "row" => 19,
-  "seat" => 17,
-  "train" => 4,
-  "type" => 3,
-  "wagon" => 6,
-  "zone" => 8
-}
-Answer: 1001849322119
+1001849322119
 
 Thoughts:
+
+More complicated as I initially thought, because most columns are valid for more than
+one rule. Interestingly no column is valid for the *same* number of rules, which makes me
+think this is a manifestation of some maths problem I don't know about.
+
+Anyway, solve it by:
+* Transposing the tickets into lists of "columns"
+* Match each column against the rules it satisfies
+* Starting with the column that only matches one rule, mark that column as solved.
+* Continue for subsequent rules, removing the solved columns from the set of rules it
+  satisfies as we go.
+
+I'm sure there is a more efficient way to handle this rather than the building up n lists
+and then for each entry removing that from the remaining lists.
 
 
 +------------------+
 | Overall Thoughts |
 +------------------+
 
-Initial version. Will tidy up later.
-
 Spent a bit too long on silly mistakes in this one. Think I need to consider my development
-process to help avoid making errors.
+process to help avoid making errors, especially when dealing with multiple related data structures
+/ representation of those data structures.
 
 Also, I'm finding these daily puzzles a bit too distracting from work. I think after today
 I'm going to relegate them to the weekend. Doing them in the evenings has too much potential

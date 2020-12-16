@@ -1,27 +1,32 @@
 defmodule Day16Part1 do
   def run do
-    {rules, _my_ticket, tickets} =
-      File.read!("input")
-      |> parse_input()
+    {rules, tickets} = File.read!("input") |> parse_input()
 
-    Enum.flat_map(tickets, &invalid_fields(&1, rules))
+    Enum.flat_map(tickets, &find_invalid_fields(&1, rules))
     |> Enum.sum()
     |> IO.puts()
   end
 
+  def find_invalid_fields(ticket, rules) do
+    Enum.reject(ticket, fn field ->
+      Enum.any?(rules, fn {_name, range1, range2} -> field in range1 || field in range2 end)
+    end)
+  end
+
   def parse_input(input) do
-    [rules, [_, my_ticket | _], [_ | nearby_tickets]] =
+    [rules, _, [_ | nearby_tickets]] =
       input
       |> String.split("\n\n", trim: true)
       |> Enum.map(&String.split(&1, "\n", trim: true))
 
     rules = Enum.map(rules, &parse_rule/1)
 
-    [my_ticket | nearby_tickets] =
-      [my_ticket | nearby_tickets]
-      |> Enum.map(fn ticket -> String.split(ticket, ",") |> Enum.map(&String.to_integer/1) end)
+    nearby_tickets =
+      for ticket <- nearby_tickets do
+        ticket |> String.split(",") |> Enum.map(&String.to_integer/1)
+      end
 
-    {rules, my_ticket, nearby_tickets}
+    {rules, nearby_tickets}
   end
 
   def parse_rule(rule) do
@@ -30,12 +35,6 @@ defmodule Day16Part1 do
 
     [a, b, c, d] = Enum.map(ranges, &String.to_integer/1)
     {name, a..b, c..d}
-  end
-
-  def invalid_fields(ticket, rules) do
-    Enum.reject(ticket, fn field ->
-      Enum.any?(rules, fn {_name, range1, range2} -> field in range1 || field in range2 end)
-    end)
   end
 end
 
