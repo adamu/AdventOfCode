@@ -1,0 +1,56 @@
+Day 16 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day16part1.exs
+28884
+
+Thoughts:
+
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day16part2.exs
+Idenfitied columns: %{
+  "arrival location" => 18,
+  "arrival platform" => 12,
+  "arrival station" => 10,
+  "arrival track" => 7,
+  "class" => 15,
+  "departure date" => 11,
+  "departure location" => 2,
+  "departure platform" => 13,
+  "departure station" => 14,
+  "departure time" => 1,
+  "departure track" => 9,
+  "duration" => 0,
+  "price" => 5,
+  "route" => 16,
+  "row" => 19,
+  "seat" => 17,
+  "train" => 4,
+  "type" => 3,
+  "wagon" => 6,
+  "zone" => 8
+}
+Answer: 1001849322119
+
+Thoughts:
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Initial version. Will tidy up later.
+
+Spent a bit too long on silly mistakes in this one. Think I need to consider my development
+process to help avoid making errors.
+
+Also, I'm finding these daily puzzles a bit too distracting from work. I think after today
+I'm going to relegate them to the weekend. Doing them in the evenings has too much potential
+to spill over into the next day.
