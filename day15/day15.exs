@@ -8,22 +8,23 @@ defmodule Day15 do
     |> IO.puts()
   end
 
-  def start([], last, round, stop, state), do: play(last, round, stop, state)
+  def start([], prev_num, round, stop, state), do: play(prev_num, round, stop, state)
 
-  def start([num | rest], _last, round, stop, state) do
+  def start([num | rest], _prev_num, round, stop, state) do
     start(rest, num, round + 1, stop, Map.put(state, num, {round, round}))
   end
 
-  def play(num, stop, stop, state) do
-    {a, b} = state[num]
-    b - a
+  def play(prev_num, stop, stop, state), do: next_num(prev_num, state)
+
+  def play(prev_num, round, stop, state) do
+    num = next_num(prev_num, state)
+    state = Map.update(state, num, {round, round}, fn {_a, b} -> {b, round} end)
+    play(num, round + 1, stop, state)
   end
 
-  def play(num, round, stop, state) do
-    {a, b} = state[num]
-    say = b - a
-    state = Map.update(state, say, {round, round}, fn {_a, b} -> {b, round} end)
-    play(say, round + 1, stop, state)
+  def next_num(prev_num, state) do
+    {a, b} = state[prev_num]
+    b - a
   end
 end
 
