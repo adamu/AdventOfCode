@@ -19,13 +19,13 @@ defmodule Day16Part2 do
     end)
   end
 
-  def transpose_tickets(tickets) do
-    tickets |> Enum.zip() |> Enum.map(&Tuple.to_list/1) |> Enum.with_index()
-  end
+  def transpose_tickets(tickets), do: tickets |> Enum.zip() |> Enum.map(&Tuple.to_list/1)
 
   # Compare each column against the rules to determine the list of fields each column satisfies
   def valid_fields_for_columns(transposed_tickets, rules) do
-    for {column, idx} <- transposed_tickets, do: {idx, valid_fields_for(column, rules)}
+    for {column, idx} <- Enum.with_index(transposed_tickets) do
+      {valid_fields_for(column, rules), idx}
+    end
   end
 
   # Reduce the list of valid fields by elimination.
@@ -35,10 +35,10 @@ defmodule Day16Part2 do
   # Repeat for all columns.
   def reduce_to_column_by_field_name(valid_fields_by_column) do
     valid_fields_by_column
-    |> Enum.sort_by(fn {_k, v} -> length(v) end)
-    |> Enum.map_reduce([], fn {col, fields}, seen ->
+    |> Enum.sort_by(fn {fields, _idx} -> length(fields) end)
+    |> Enum.map_reduce([], fn {fields, idx}, seen ->
       [field] = fields -- seen
-      {{field, col}, [field | seen]}
+      {{field, idx}, [field | seen]}
     end)
     |> elem(0)
   end
