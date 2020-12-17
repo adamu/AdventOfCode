@@ -44,9 +44,9 @@ defmodule Day16Part2 do
   def reduce_to_column_by_field_name(valid_fields_by_column) do
     valid_fields_by_column
     |> Enum.sort_by(fn {_k, v} -> length(v) end)
-    |> Enum.reduce({[], []}, fn {col, fields}, {identified, seen} ->
+    |> Enum.map_reduce([], fn {col, fields}, seen ->
       [field] = fields -- seen
-      {[{field, col} | identified], [field | seen]}
+      {{field, col}, [field | seen]}
     end)
     |> elem(0)
   end
