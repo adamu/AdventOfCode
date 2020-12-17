@@ -39,6 +39,13 @@ Anyway, solve it by:
 I'm sure there is a more efficient way to handle this rather than the building up n lists
 and then for each entry removing that from the remaining lists.
 
+** UPDATE 17 December **
+
+I refactored part 2, and I'm much happier with it now.
+Most of the simplifications I thought of myself, but there was one change I read on the ElixirForum,
+using Enum.zip to transpose the ticket rows to columns, which I wanted to use, so I committed that
+change only to day16paet2-simpler-transpose.exs.
+
 
 +------------------+
 | Overall Thoughts |
