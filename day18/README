@@ -1,0 +1,34 @@
+Day 18 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day18part1.exs
+<will add later>
+
+Thoughts:
+Since the order of precedence is the same, we can walk the token list, building up a left operand
+and operator as we go, then applying the operator as soon as we get the right operand.  For groups,
+use recursion to resolve the group, and push the result back onto the beginning of the token list.
+
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day18part2.exs
+
+Thoughts:
+
+Now the order of precedence is relevant, so can no longer just walk the token list, need to know the
+full context.
+Addition basically becomes implicit brackets.
+Will do this part later.
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+
