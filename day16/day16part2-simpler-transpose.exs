@@ -56,7 +56,7 @@ defmodule Day16Part2 do
       |> String.split("\n\n", trim: true)
       |> Enum.map(&String.split(&1, "\n", trim: true))
 
-    rules = Map.new(rules, &parse_rule/1)
+    rules = Enum.map(rules, &parse_rule/1)
 
     [my_ticket | nearby_tickets] =
       [my_ticket | nearby_tickets]
