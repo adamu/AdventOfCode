@@ -1,0 +1,44 @@
+Day 17 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day17part1.exs
+362
+
+Thoughts:
+
+The answer is not pretty, but it works.
+
+Rather than iterate through the entire coordinate plane, which would require keeping track of where
+the current extremities are, I decided to only keep the set of active cubes around. Then for each
+iteration, check all the active cube's neighbours.
+
+In addition to counting the neighbours for the active cube, keep track of the inactive neighbours,
+then check *their* neighbours too to see if they should become active.
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day17part2.exs
+1980
+
+Thoughts:
+
+In Part 1 I was half expecting a high iteration count for part 2, hence why I avoided iterating the
+entire plane. Instead, adding a 4th dimension was a two-line change :-)
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Nice to have a quick Part 2 solve after day 18 which took me ages. I probably dug myself into
+a hole on day 18 though and should have took a step back and tried with a clearer mind.
+
+I spent quite a while getting distracted by the examples, because they present a sliding plane.
+Turns out I had actually written the correct implementation, I just struggled to translate my
+coordinates to the graphical examples. Running the script produced the correct answer though, but
+I cross-referenced it with one of the confusing examples, just in case it wasn't pure luck. I'm
+glad I was able to solve Part 2 without reading all the dreaded 4D examples there too!
