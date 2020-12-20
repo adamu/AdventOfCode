@@ -2,7 +2,7 @@
 
 My (attempted) solutions to [Advent of Code 2020](https://adventofcode.com/2020) in Elixir.
 
-<img width="983" alt="image" src="https://user-images.githubusercontent.com/498229/102591989-31987500-4156-11eb-8d21-2ea88021c9b0.png">
+<img width="978" alt="image" src="https://user-images.githubusercontent.com/498229/102717151-cdc3a700-4323-11eb-930e-613465f503d1.png">
 
 ## Strategy
 

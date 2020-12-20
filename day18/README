@@ -5,7 +5,7 @@ Day 18 Notes
 +--------+
 
 $ elixir day18part1.exs
-<will add later>
+21347713555555
 
 Thoughts:
 Since the order of precedence is the same, we can walk the token list, building up a left operand
@@ -18,17 +18,48 @@ use recursion to resolve the group, and push the result back onto the beginning 
 +--------+
 
 $ elixir day18part2.exs
+275011754427339
 
 Thoughts:
 
 Now the order of precedence is relevant, so can no longer just walk the token list, need to know the
 full context.
 Addition basically becomes implicit brackets.
-Will do this part later.
+
+If we have a * operand, for example 2 in 1 * 2 + 3, we can't apply * without first looking ahead
+to see if there is a higher precedence +.
+
+I decided to build an Abstract Syntax Tree, and then evaluate it. To build the AST, I used the
+following strategy:
+
+1. First pass - resolve + operations.
+   For numbers and * operators, store them in a _later_ buffer until we know what to do with them.
+   For + operators, we can safely add the previous operand in the later buffer with the next
+   operand.
+   Recurse into brackets.
+2. Second pass - resolve * operations.
+   The second pass runs at the end of any bracket group, or the end of string.
+   All the additions have been handled, so can safely just multiply these.
+3. Finally, evaluate the AST recursively to get the answer.
+
+I spent far too long on this and it was very difficult to debug. The examples provided were very
+useful and hit a lot of edge cases. Again, I really struggle to reason about any form of recursion
+that is more complex than a simple loop. There were lots of IO.inspects going on in the development
+of this. The answer can probably be simplified further, but I'm pretty happy that I managed to
+implement it using an AST with multiple function clauses as a proof of concept.
+
+It's pretty hard to tell what all the clauses do at first glance, but then that would be true for a
+a huge function with lots of embedded conditionals too. I will definitely be seeing how other people
+implemented this one.
 
 
 +------------------+
 | Overall Thoughts |
 +------------------+
 
+Part 1 was very simple due to it not having precedence, and I think it can be implemented nicely in
+Elixir. Part 2's deceptively simple requirements were surprisingly difficult - probably because of
+the approach I took with building an AST.
 
+Considering I have less time to spend on the last week of questions, I decided to chip away at this
+one over a few days. Now I'm spoilt for choice for which one to do next! 17, 19, or 20...
