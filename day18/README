@@ -52,7 +52,6 @@ It's pretty hard to tell what all the clauses do at first glance, but then that 
 a huge function with lots of embedded conditionals too. I will definitely be seeing how other people
 implemented this one.
 
-
 +------------------+
 | Overall Thoughts |
 +------------------+
@@ -63,3 +62,7 @@ the approach I took with building an AST.
 
 Considering I have less time to spend on the last week of questions, I decided to chip away at this
 one over a few days. Now I'm spoilt for choice for which one to do next! 17, 19, or 20...
+
+
+Update: this solution is great. Wish I'd thought of it. What I was trying to do here, but simple and
+elegant: https://elixirforum.com/t/advent-of-code-2020-day-18/36300/6
