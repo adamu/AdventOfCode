@@ -1,0 +1,58 @@
+Day 24 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day24part1.exs
+326
+
+Thoughts:
+
+Interesting. Need to work out how to implement a hexagonal grid.
+
+Use Enum.chunk_while to parse the variable-length `e`, `ne`, `s', `sw` etc. input tokens.
+
+I decided to do it like this: Use x, y coordinates, but horizontally adjacent cells are 2 x units
+apart. Diagonally adjacent cells are 1 x unit and 1 y unit apart.
+
+   / \ (0,0)
+  |   |
+ / \ / \ (1, -1)
+|   |   |
+ \ / \ / 
+  ↑
+(-1, -1)
+
+Define a tranlation vector for each direction, then we can walk the directions, and take the sum
+of all the translations.
+
+Store the black cells in a MapSet, and count them once we're done.
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day24part2.exs
+3979
+
+Thoughts:
+
+More complicated now, because we actually have to iterate all the black/white cells and their
+neighbours. Calculating the grid extremities looks complicated due to the hexagonal properties.
+However, this is very similar to Day 17 Part 2, so I will just adapt that solution for here too:
+
+1. For all current black squares, check the neighbours to see what its next state should be.
+   - additionally keep track of which white squares we identified.
+2. As white cells must have a black neighbour to be flipped, we know that it's fine to only
+   check white cells that are next to a black cell. So iterate the white cells we encountered
+   in step 1, and check their neighbours too.
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Let another game of life. 3rd time this year? This one was a bit more interesting due to the
+hexagonal nature, but part two was almost the same as Day 17. Maybe that's a good reflection
+on my day 17 implementation, though.
