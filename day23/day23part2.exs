@@ -66,7 +66,6 @@ defmodule Day23Part2 do
     [{^next, {^dest, last}}] = :ets.lookup(cups, next)
     :ets.insert(cups, {dest, {prev, a}})
     :ets.insert(cups, {a, {dest, b}})
-    :ets.insert(cups, {b, {a, c}})
     :ets.insert(cups, {c, {b, next}})
     :ets.insert(cups, {next, {c, last}})
     cups
