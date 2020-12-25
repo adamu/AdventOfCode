@@ -1,0 +1,26 @@
+Day 25 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day25part1.exs
+4968512
+
+Thoughts:
+
+Was a bit difficult to decipher the requirements, but after that the implementation was
+simple enough. Wondering if there's a significance of the numbers 7 and 2020_12_27?
+
++--------+
+| Part 2 |
++--------+
+
+Arg. Need all the previous stars. So far I'm 10 under.
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+
