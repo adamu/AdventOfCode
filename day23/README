@@ -1,0 +1,52 @@
+Day 23 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day23part1.exs
+59374826
+
+Thoughts:
+
+Need to represent a circle.
+Use a combination of lists, and Stream.cycle to handle the wrap-around.
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day23part2.exs
+Next two cups: 266262, 251174
+Answer: 66878091588
+
+Thoughts:
+
+Considering the numbers involved (1M items, 10M iterations), the Part 1 solution with its
+O(n) list operations is just not going to work. We need a solution that works in constant time.
+
+How to represent the circle: we need a doubly-linked list with random access *in constant time*.
+Two options I can think of: Erlang's :array, or :ets. :array's documentation doesn't say anything
+about its performance and the arrays seem resizable, however :ets says it's constant time, so I
+decided to use ETS.
+
+Completely re-write the part 1 implementation. Represent the circle in ETS with the keys being the
+cup label, and the values being a {prev, next} tuple.
+
+Remove from the circle: Update the two new neighbours to point to each other.
+Add to the circle: Update the four new neighbours (left & right extremities) to point to each
+other.
+
+Even after these efficiency improvements, this still takes 22 seconds on my machine >.<
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Interesting problem. Produced an elegant solution for Part 1 that simply wasn't scalable for Part
+2. Part 2 required working around the beam's limitations of number-crunching a large dataset. ETS
+kind of worked, but was still very slow, so this is obviously not scalable. I will be interested
+to see if people came up with a solution that completes in less than a second (or even 10 seconds,
+as per the guideline).
+
+
