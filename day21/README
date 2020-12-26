@@ -1,0 +1,36 @@
+Day 21 Notes
+
++--------+
+| Part 1 |
++--------+
+
+$ elixir day21part1.exs
+1829
+
++--------+
+| Part 2 |
++--------+
+
+$ elixir day21part2.exs
+sp contains peanuts
+gkcqxs contains fish
+krjn contains shellfish
+bpbdlmg contains soy
+mxkh contains dairy
+bvh contains nuts
+rgc contains sesame
+tdbcfb contains wheat
+mxkh,gkcqxs,bvh,sp,rgc,krjn,bpbdlmg,tdbcfb
+
+
++------------------+
+| Overall Thoughts |
++------------------+
+
+Not much to say about this problem. I didn't really enjoy it much.
+I mostly just fiddled about with the data until it reduced down to the
+required information.
+
+The process of elimination - identifying the allergen with just 1 ingredient
+and using that to decude the other options, was very similar identifying the tickets
+in Day 16.
