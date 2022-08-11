@@ -12,7 +12,29 @@ const gpa = util.gpa;
 const data = @embedFile("../data/day01.txt");
 
 pub fn main() !void {
+    var it = tokenize(u8, data, "\n");
 
+    // Not sure if allocating a massive buffer and tracking the size is the right approach?
+    var buffer: [1000]u16 = undefined;
+    var i: usize = 0;
+    while (it.next()) |line| {
+        const int = try parseInt(u16, line, 10);
+        buffer[i] = int;
+        // Can we use continue expression?
+        i = i + 1;
+    }
+
+    var answer: u32 = 0;
+    outer: for (buffer[0..i]) |a, j| {
+        for (buffer[(j+1)..i]) |b| {
+            if (a + b == 2020) {
+                answer = @as(u32, a) * b;
+                break :outer;
+            }
+        }
+    }
+
+    print("{d}\n", .{answer});
 }
 
 // Useful stdlib functions
