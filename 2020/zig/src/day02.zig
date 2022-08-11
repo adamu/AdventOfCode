@@ -9,10 +9,31 @@ const Str = []const u8;
 const util = @import("util.zig");
 const gpa = util.gpa;
 
-const data = @embedFile("../data/day02.txt");
+const data = @embedFile("input");
 
 pub fn main() !void {
-    
+    var it = tokenize(u8, data, "\n");
+    var valid_pw_count: u16 = 0;
+    while (it.next()) |line| {
+        var line_it = tokenize(u8, line, ": -");
+        const min_val = try parseInt(u8, line_it.next().?, 10);
+        const max_val = try parseInt(u8, line_it.next().?, 10);
+        const req_char = line_it.next().?[0];
+        const password = line_it.next().?;
+
+        // count how many times req_char is in password
+        var count: u8 = 0;
+        for (password) |password_char| {
+            if (req_char == password_char)
+                count += 1; 
+        }
+
+        if (min_val <= count and count <= max_val)
+            valid_pw_count += 1;
+
+        print("{d}-{d} {c}: {s} => {d}\n", .{min_val, max_val, req_char, password, count});
+    }
+    print("{d}\n", .{valid_pw_count});
 }
 
 // Useful stdlib functions
