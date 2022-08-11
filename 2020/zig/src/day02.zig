@@ -12,6 +12,13 @@ const gpa = util.gpa;
 const data = @embedFile("input");
 
 pub fn main() !void {
+    print("Part 1: {d}\n", .{part1()});
+    print("Part 2: {d}\n", .{part2()});
+}
+
+// TODO remove duplication by building a struct from the input?
+
+fn part1() !u16 {
     var it = tokenize(u8, data, "\n");
     var valid_pw_count: u16 = 0;
     while (it.next()) |line| {
@@ -30,11 +37,29 @@ pub fn main() !void {
 
         if (min_val <= count and count <= max_val)
             valid_pw_count += 1;
-
-        print("{d}-{d} {c}: {s} => {d}\n", .{min_val, max_val, req_char, password, count});
     }
-    print("{d}\n", .{valid_pw_count});
+    return valid_pw_count;
 }
+
+fn part2() !u16 {
+    var it = tokenize(u8, data, "\n");
+    var valid_pw_count: u16 = 0;
+    while (it.next()) |line| {
+        var line_it = tokenize(u8, line, ": -");
+        const pos_a = try parseInt(u8, line_it.next().?, 10);
+        const pos_b = try parseInt(u8, line_it.next().?, 10);
+        const req_char = line_it.next().?[0];
+        const password = line_it.next().?;
+
+        const a_match = password[pos_a-1] == req_char;
+        const b_match = password[pos_b-1] == req_char;
+        // No xor in zig?
+        if (a_match and !b_match or !a_match and b_match)
+            valid_pw_count += 1;
+    }
+    return valid_pw_count;
+}
+
 
 // Useful stdlib functions
 const tokenize = std.mem.tokenize;
