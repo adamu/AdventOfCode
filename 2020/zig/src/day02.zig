@@ -1,5 +1,6 @@
 const std = @import("std");
 const gpa = @import("util.zig").gpa;
+const Allocator = std.mem.Allocator;
 const ArrayList = std.ArrayList;
 const tokenize = std.mem.tokenize;
 const parseInt = std.fmt.parseInt;
@@ -13,6 +14,7 @@ const Rule = struct {
 
 pub fn main() !void {
     const rules = try parse();
+    defer Allocator.free(gpa, rules);
     print("Part 1: {d}\n", .{part1(rules)});
     print("Part 2: {d}\n", .{part2(rules)});
 }
