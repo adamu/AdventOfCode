@@ -24,17 +24,20 @@ pub fn main() !void {
         i = i + 1;
     }
 
-    var answer: u32 = 0;
-    outer: for (buffer[0..i]) |a, j| {
-        for (buffer[(j+1)..i]) |b| {
+    try part1(buffer[0..i]);
+}
+
+fn part1(input: []u16) !void {
+    for (input) |a, i| {
+        for (input[(i+1)..]) |b| {
             if (a + b == 2020) {
-                answer = @as(u32, a) * b;
-                break :outer;
+                const answer = @as(u32, a) * b;
+                print("Part1: {d}\n", .{answer});
+                return;
             }
         }
     }
 
-    print("{d}\n", .{answer});
 }
 
 // Useful stdlib functions
