@@ -18,33 +18,31 @@ pub fn main() !void {
         i = i + 1;
     }
 
-    try part1(buffer[0..i]);
-    try part2(buffer[0..i]);
+    print("Part 1: {d}\n", .{part1(buffer[0..i])});
+    print("Part 2: {d}\n", .{part2(buffer[0..i])});
 }
 
 
-fn part1(input: []u16) !void {
+fn part1(input: []u16) u32 {
     for (input) |a, i| {
         for (input[(i+1)..]) |b| {
             if (a + b == 2020) {
-                const answer = @as(u32, a) * b;
-                print("Part1: {d}\n", .{answer});
-                return;
+                return @as(u32, a) * b;
             }
         }
     }
+    return 0;
 }
 
-fn part2(input: []u16) !void {
+fn part2(input: []u16) u32 {
     for (input) |a, i| {
         for (input[(i+1)..]) |b, j| {
             for (input[(j+1)..]) |c| {
                 if (a + b + c == 2020) {
-                    const answer = @as(u32, a) * b * c;
-                    print("Part2: {d}\n", .{answer});
-                    return;
+                    return @as(u32, a) * b * c;
                 }
             }
         }
     }
+    return 0;
 }
