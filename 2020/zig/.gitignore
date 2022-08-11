@@ -1,4 +1,5 @@
 zig-cache/
 zig-out/
-data/
+src/sample
+src/input
 build_runner.zig

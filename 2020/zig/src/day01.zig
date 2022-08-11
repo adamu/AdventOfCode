@@ -3,7 +3,7 @@ const tokenize = std.mem.tokenize;
 const parseInt = std.fmt.parseInt;
 const print = std.debug.print;
 
-const data = @embedFile("../data/day01.txt");
+const data = @embedFile("input");
 
 pub fn main() !void {
     var it = tokenize(u8, data, "\n");
