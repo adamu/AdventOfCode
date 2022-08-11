@@ -34,7 +34,7 @@ fn parse() ![]Rule {
     return rules.toOwnedSlice();
 }
 
-fn part1(rules: []Rule) !u16 {
+fn part1(rules: []Rule) u16 {
     var valid_pw_count: u16 = 0;
     for (rules) |rule| {
         var count: u8 = 0;
@@ -49,7 +49,7 @@ fn part1(rules: []Rule) !u16 {
     return valid_pw_count;
 }
 
-fn part2(rules: []Rule) !u16 {
+fn part2(rules: []Rule) u16 {
     var valid_pw_count: u16 = 0;
     for (rules) |rule| {
         const a_match = rule.password[rule.a-1] == rule.char;
