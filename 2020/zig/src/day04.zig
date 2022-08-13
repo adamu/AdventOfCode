@@ -1,18 +1,48 @@
 const std = @import("std");
 const Allocator = std.mem.Allocator;
-const List = std.ArrayList;
+const ArrayList = std.ArrayList;
 const Map = std.AutoHashMap;
-const StrMap = std.StringHashMap;
+const StringHashMap = std.StringHashMap;
 const BitSet = std.DynamicBitSet;
 const Str = []const u8;
 
 const util = @import("util.zig");
 const gpa = util.gpa;
 
-const data = @embedFile("../data/day04.txt");
+const input = @embedFile("input");
 
 pub fn main() !void {
-    
+    // *still* don't know how to manage the memory here...
+    var passports = ArrayList([]const u8).init(gpa);
+    var building_passport = ArrayList(u8).init(gpa);
+    var prev: u8 = 'a';
+    // Ugh. How do we split on a known string (not single byte)?
+    for (input) |char| {
+        if (prev == '\n' and char == '\n') {
+            try passports.append(building_passport.toOwnedSlice());
+        } else {
+            try building_passport.append(char);
+            prev = char;
+        }
+    }
+    try passports.append(building_passport.toOwnedSlice());
+
+    const required_fields = [_][]const u8{ "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid" };
+    var valid_count: usize = 0;
+    for (passports.items) |passport| {
+        var tokens = tokenize(u8, passport, ": \n");
+        var fields = StringHashMap(u8).init(gpa);
+        while (tokens.next()) |token| {
+            try fields.put(token, 1);
+            _ = tokens.next();
+        }
+        var valid = true;
+        for (required_fields) |required_field| {
+            valid = valid and fields.contains(required_field);
+        }
+        if (valid) valid_count += 1;
+    }
+    print("{}\n", .{valid_count});
 }
 
 // Useful stdlib functions
