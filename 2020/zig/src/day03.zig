@@ -39,7 +39,7 @@ fn count_trees(slope: [][]bool, delta_x: usize, delta_y: usize) usize {
         if (square) {
             count += 1;
         }
-        x = std.math.mod(usize, x + delta_x, slope[y].len) catch 0;
+        x = (x + delta_x) % slope[y].len;
         y += delta_y;
     }
     return count;
