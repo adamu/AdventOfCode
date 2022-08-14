@@ -12,33 +12,28 @@ const gpa = util.gpa;
 const input = @embedFile("input");
 
 pub fn main() !void {
-    // *still* don't know how to manage the memory here...
-    var passports = ArrayList([]const u8).init(gpa);
-    var building_passport = ArrayList(u8).init(gpa);
-    var prev: u8 = 'a';
-    // Ugh. How do we split on a known string (not single byte)?
-    for (input) |char| {
-        if (prev == '\n' and char == '\n') {
-            try passports.append(building_passport.toOwnedSlice());
+    var line_it = split(u8, input, "\n");
+    var passports = ArrayList(StringHashMap([]const u8)).init(gpa);
+    var fields = StringHashMap([]const u8).init(gpa);
+    while (line_it.next()) |line| {
+        if (line.len == 0) {
+            try passports.append(try fields.clone());
+            fields.clearAndFree();
         } else {
-            try building_passport.append(char);
-            prev = char;
+            var token_it = tokenize(u8, line, " :");
+            while (token_it.next()) |token| {
+                try fields.put(token, token_it.next().?);
+            }
         }
     }
-    try passports.append(building_passport.toOwnedSlice());
+    try passports.append(fields);
 
     const required_fields = [_][]const u8{ "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid" };
     var valid_count: usize = 0;
     for (passports.items) |passport| {
-        var tokens = tokenize(u8, passport, ": \n");
-        var fields = StringHashMap(u8).init(gpa);
-        while (tokens.next()) |token| {
-            try fields.put(token, 1);
-            _ = tokens.next();
-        }
-        var valid = true;
+        var valid: bool = true;
         for (required_fields) |required_field| {
-            valid = valid and fields.contains(required_field);
+            valid = valid and passport.contains(required_field);
         }
         if (valid) valid_count += 1;
     }
