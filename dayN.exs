@@ -27,7 +27,7 @@ defmodule DayREPLACE_ME do
     end
   end
 
-  def run_parts_with_timer(input) do
+  defp run_parts_with_timer(input) do
     {p1_microsecs, p1_result} = :timer.tc(fn -> part1(input) end)
     IO.puts("Part 1 (completed in #{format_time(p1_microsecs)}):")
     IO.write("\n")
