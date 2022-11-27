@@ -3,16 +3,23 @@ defmodule DayREPLACE_ME do
     input
   end
 
-  def part2(input) do
-    input
+  def part2(_input) do
+    :ok
   end
 
   def run do
+    case input() do
+      :usage -> print_usage()
+      input -> run_parts_with_timer(input)
+    end
+  end
+
+  def input do
     with [input_filename] <- System.argv(),
          {:ok, input} <- File.read(input_filename) do
-      run_parts_with_timer(input)
+      input
     else
-      _ -> print_usage()
+      _ -> :usage
     end
   end
 
