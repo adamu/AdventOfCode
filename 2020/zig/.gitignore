@@ -1,5 +1,0 @@
-zig-cache/
-zig-out/
-src/sample
-src/input
-build_runner.zig
