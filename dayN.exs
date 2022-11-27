@@ -7,19 +7,23 @@ defmodule DayREPLACE_ME do
     :ok
   end
 
-  def run do
-    case input() do
-      :usage -> print_usage()
-      input -> run_parts_with_timer(input)
-    end
-  end
-
   def input do
     with [input_filename] <- System.argv(),
          {:ok, input} <- File.read(input_filename) do
       input
     else
-      _ -> :usage
+      _ -> :error
+    end
+  end
+
+  #######################
+  # HERE BE BOILERPLATE #
+  #######################
+
+  def run do
+    case input() do
+      :error -> print_usage()
+      input -> run_parts_with_timer(input)
     end
   end
 
@@ -52,4 +56,4 @@ defmodule DayREPLACE_ME do
   end
 end
 
-DayREPLACE_ME.run()
+# DayREPLACE_ME.run()
