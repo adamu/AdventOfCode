@@ -28,16 +28,14 @@ defmodule DayREPLACE_ME do
   end
 
   defp run_parts_with_timer(input) do
-    {p1_microsecs, p1_result} = :timer.tc(fn -> part1(input) end)
-    IO.puts("Part 1 (completed in #{format_time(p1_microsecs)}):")
-    IO.write("\n")
-    IO.puts(p1_result)
-    IO.write("\n")
+    run_with_timer(1, fn -> part1(input) end)
+    run_with_timer(2, fn -> part2(input) end)
+  end
 
-    {p2_microsecs, p2_result} = :timer.tc(fn -> part2(input) end)
-    IO.puts("Part 2 (completed in #{format_time(p2_microsecs)}):")
-    IO.write("\n")
-    IO.puts(p2_result)
+  defp run_with_timer(part, fun) do
+    {time, result} = :timer.tc(fun)
+    IO.puts("Part #{part} (completed in #{format_time(time)}):\n")
+    IO.puts("#{result}\n")
   end
 
   defp format_time(μsec) when μsec < 1_000, do: "#{μsec}μs"
