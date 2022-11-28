@@ -7,7 +7,10 @@ defmodule Day4 do
     sum_unmarked(winning_board) * current_number
   end
 
-  def play({_numbers = [], boards}), do: boards
+  def part2(input) do
+    {current_number, last_board} = play_until_last(input)
+    sum_unmarked(last_board) * current_number
+  end
 
   def play({[current_number | next_numbers], boards}) do
     boards = for board <- boards, do: mark(board, current_number)
@@ -16,6 +19,21 @@ defmodule Day4 do
       nil -> play({next_numbers, boards})
       board -> {current_number, board}
     end
+  end
+
+  def play_until_last({_numbers, [_last_board]} = input), do: play(input)
+
+  def play_until_last({numbers, boards} = input) do
+    {_current_number, current_winner} = play(input)
+
+    current_winner_no_markers = Map.new(current_winner, fn {k, {v, _marker}} -> {k, v} end)
+
+    remaining_boards =
+      Enum.reject(boards, fn board ->
+        current_winner_no_markers == Map.new(board, fn {k, {v, _marker}} -> {k, v} end)
+      end)
+
+    play_until_last({numbers, remaining_boards})
   end
 
   def sum_unmarked(board) do
@@ -52,10 +70,6 @@ defmodule Day4 do
     else
       check_for_winner(boards)
     end
-  end
-
-  def part2(_input) do
-    :ok
   end
 
   def input do
@@ -116,4 +130,4 @@ defmodule Day4 do
   end
 end
 
-# Day4.run()
+Day4.run()
