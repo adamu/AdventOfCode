@@ -40,14 +40,7 @@ defmodule DayREPLACE_ME do
 
   defp format_time(μsec) when μsec < 1_000, do: "#{μsec}μs"
   defp format_time(μsec) when μsec < 1_000_000, do: "#{μsec / 1000}ms"
-  defp format_time(μsec) when μsec < 60_000_000, do: "#{μsec / 1_000_000}s"
-
-  defp format_time(μsec) when μsec < 3_660_000_000 do
-    total_secs = round(μsec / 1_000_000)
-    mins = div(total_secs, 60)
-    secs = rem(total_secs, 60)
-    "#{mins}m#{secs}s"
-  end
+  defp format_time(μsec), do: "#{μsec / 1_000_000}s"
 
   defp print_usage do
     IO.puts("Usage: elixir dayREPLACE_ME.exs input_filename")
