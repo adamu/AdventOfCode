@@ -5,17 +5,38 @@ defmodule Day6 do
     |> length()
   end
 
-  def part2(_input) do
-    :ok
+  defp run_days(school, 0), do: school
+  defp run_days(school, days), do: run_days(day(school), days - 1)
+
+  defp day(school), do: Enum.flat_map(school, &fish/1)
+
+  defp fish(0), do: [6, 8]
+  defp fish(age), do: [age - 1]
+
+  # Implementing part 2 completely differently to avoid exponential growth
+
+  def part2(input) do
+    counts = Map.new(0..8, fn age -> {age, 0} end)
+
+    input
+    |> Enum.frequencies()
+    |> Enum.into(counts)
+    |> run_days2(256)
+    |> Map.values()
+    |> Enum.sum()
   end
 
-  def run_days(school, 0), do: school
-  def run_days(school, days), do: run_days(day(school), days - 1)
+  defp run_days2(counts, 0), do: counts
+  defp run_days2(counts, days), do: run_days2(day2(counts), days - 1)
 
-  def day(school), do: Enum.flat_map(school, &fish/1)
+  defp day2(counts) do
+    {breeders, counts} = Map.pop(counts, 0)
 
-  def fish(0), do: [6, 8]
-  def fish(age), do: [age - 1]
+    counts
+    |> Map.new(fn {age, count} -> {age - 1, count} end)
+    |> Map.update(6, 0, &(&1 + breeders))
+    |> Map.put(8, breeders)
+  end
 
   def input do
     with [input_filename] <- System.argv(),
@@ -60,4 +81,4 @@ defmodule Day6 do
   end
 end
 
-# Day6.run()
+Day6.run()
