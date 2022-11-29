@@ -19,8 +19,40 @@ defmodule Day9 do
     Enum.all?(neighbours(cave, x, y), fn {xn, yn} -> here < cave.floor[{xn, yn}] end)
   end
 
-  def part2(_input) do
-    :ok
+  def part2(cave) do
+    cave
+    |> remove_nines()
+    |> find_basins()
+    |> Enum.sort(:desc)
+    |> Enum.take(3)
+    |> Enum.reduce(&Kernel.*/2)
+  end
+
+  defp find_basins(%Cave{floor: floor}) when floor == %{}, do: []
+
+  defp find_basins(cave) do
+    {cave, location} = get_start_location(cave)
+    {cave, basin} = find_basin(cave, [location], [location])
+    [basin | find_basins(cave)]
+  end
+
+  defp find_basin(cave, [], basin), do: {cave, length(basin)}
+
+  defp find_basin(cave, [{x, y} | locations], basin) do
+    neighbours = cave.floor |> Map.take(neighbours(cave, x, y)) |> Map.keys()
+    cave = %Cave{cave | floor: Map.drop(cave.floor, neighbours)}
+    find_basin(cave, locations ++ neighbours, basin ++ neighbours)
+  end
+
+  defp remove_nines(cave) do
+    floor = cave.floor |> Enum.reject(&match?({_k, 9}, &1)) |> Map.new()
+    %Cave{cave | floor: floor}
+  end
+
+  defp get_start_location(cave) do
+    [{location, _v}] = Enum.take(cave.floor, 1)
+    cave = %Cave{cave | floor: Map.delete(cave.floor, location)}
+    {cave, location}
   end
 
   def input do
@@ -76,4 +108,4 @@ defmodule Day9 do
   end
 end
 
-# Day9.run()
+Day9.run()
