@@ -45,7 +45,7 @@ defmodule Day9 do
   end
 
   defp remove_nines(cave) do
-    floor = cave.floor |> Enum.reject(&match?({_k, 9}, &1)) |> Map.new()
+    floor = Map.reject(cave.floor, &match?({_k, 9}, &1))
     %Cave{cave | floor: floor}
   end
 
