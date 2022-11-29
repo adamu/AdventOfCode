@@ -7,11 +7,11 @@ defmodule Day10 do
     |> Enum.sum()
   end
 
-  def parse_line(_, {:corrupted, char}), do: {:corrupted, char}
-  def parse_line("", _), do: :incomplete
-  def parse_line(<<char::utf8, rest::binary>>, []), do: parse_line(rest, [char])
+  defp parse_line(_, {:corrupted, char}), do: {:corrupted, char}
+  defp parse_line("", stack), do: {:incomplete, stack}
+  defp parse_line(<<char::utf8, rest::binary>>, []), do: parse_line(rest, [char])
 
-  def parse_line(<<char::utf8, next::binary>>, [prev | popped] = stack) do
+  defp parse_line(<<char::utf8, next::binary>>, [prev | popped] = stack) do
     stack =
       case char do
         char when char in '([{<' -> [char | stack]
@@ -30,9 +30,27 @@ defmodule Day10 do
   defp score(?}), do: 1197
   defp score(?>), do: 25137
 
-  def part2(_input) do
-    :ok
+  def part2(input) do
+    scores =
+      input
+      |> Enum.map(&parse_line(&1, []))
+      |> Enum.filter(&match?({:incomplete, _}, &1))
+      |> Enum.map(fn {_, chars} -> score2(chars) end)
+      |> Enum.sort()
+
+    Enum.at(scores, trunc(length(scores) / 2))
   end
+
+  defp score2(chars) do
+    for char <- chars, reduce: 0 do
+      score -> score * 5 + points(char)
+    end
+  end
+
+  defp points(?(), do: 1
+  defp points(?[), do: 2
+  defp points(?{), do: 3
+  defp points(?<), do: 4
 
   def input do
     with [input_filename] <- System.argv(),
@@ -74,4 +92,4 @@ defmodule Day10 do
   end
 end
 
-# Day10.run()
+Day10.run()
