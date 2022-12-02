@@ -2,7 +2,7 @@ defmodule Day7 do
   def part1(input) do
     input
     |> Enum.frequencies()
-    |> Enum.into(Map.new(0..Enum.max(input), &{&1, 0}))
+    |> Enum.into(Map.new(Enum.min(input)..Enum.max(input), &{&1, 0}))
     |> calculate_costs()
     |> Enum.min()
   end
@@ -18,7 +18,7 @@ defmodule Day7 do
   def part2(input) do
     input
     |> Enum.frequencies()
-    |> Enum.into(Map.new(0..Enum.max(input), &{&1, 0}))
+    |> Enum.into(Map.new(Enum.min(input)..Enum.max(input), &{&1, 0}))
     |> calculate_sum_costs()
     |> Enum.min()
   end
