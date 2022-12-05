@@ -38,7 +38,7 @@ defmodule Day5 do
 
       procedure =
         raw_procedure
-        |> String.split(["\n", " ", "move", "from", "to"], trim: true)
+        |> String.split(["move ", " from ", " to ", "\n"], trim: true)
         |> Enum.map(&String.to_integer/1)
         |> Enum.chunk_every(3)
 
