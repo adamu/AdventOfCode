@@ -19,7 +19,9 @@ defmodule Day5 do
   end
 
   defp top_crates(stacks) do
-    Enum.reduce(stacks, "", fn {_label, [top | _stack]}, acc -> acc <> top end)
+    stacks
+    |> Enum.sort_by(fn {label, _stack} -> label end)
+    |> Enum.reduce("", fn {_label, [top | _stack]}, acc -> acc <> top end)
   end
 
   def input do
