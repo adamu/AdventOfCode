@@ -68,14 +68,11 @@ defmodule Day7 do
     unused_space = @total_size - space_used
     space_to_free = @space_needed - unused_space
 
-    {_dir, size} =
-      store
-      |> Enum.filter(&match?({_path, {:dir, _size, _paths}}, &1))
-      |> Enum.map(fn {[name | _], {:dir, size, _paths}} -> {name, size} end)
-      |> Enum.sort_by(fn {_name, size} -> size end)
-      |> Enum.find(fn {_name, size} -> size >= space_to_free end)
-
-    size
+    store
+    |> Enum.filter(&match?({_path, {:dir, _size, _paths}}, &1))
+    |> Enum.map(fn {_path, {:dir, size, _paths}} -> size end)
+    |> Enum.sort()
+    |> Enum.find(fn size -> size >= space_to_free end)
   end
 
   def input do
