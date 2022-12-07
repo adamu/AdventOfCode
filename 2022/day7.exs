@@ -24,7 +24,7 @@ defmodule Day7 do
   end
 
   defp put_dir_size(path, tree) do
-    {:dir, nil, paths} = Map.get(tree, path)
+    {:dir, nil, paths} = tree[path]
     size = tree |> Map.take(paths) |> Enum.map(fn {_, {_, size, _}} -> size end) |> Enum.sum()
     Map.put(tree, path, {:dir, size, paths})
   end
@@ -33,7 +33,7 @@ defmodule Day7 do
   defp dirs_fewest_descendents_first(_tree, [], found_dirs), do: found_dirs
 
   defp dirs_fewest_descendents_first(tree, [node | rest], dirs) do
-    case Map.get(tree, node) do
+    case tree[node] do
       {:file, _size, nil} -> dirs_fewest_descendents_first(tree, rest, dirs)
       {:dir, _size, paths} -> dirs_fewest_descendents_first(tree, paths ++ rest, [node | dirs])
     end
@@ -72,7 +72,7 @@ defmodule Day7 do
   def part2(input) do
     tree = filetree_with_dir_sizes(input)
 
-    {:dir, space_used, _} = Map.get(tree, @root)
+    {:dir, space_used, _} = tree[@root]
     unused_space = @total_size - space_used
     space_to_free = @space_needed - unused_space
 
