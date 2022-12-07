@@ -1,6 +1,3 @@
-# This is a poor and overcomplicated solution :(
-# Go and read these instead: https://elixirforum.com/t/advent-of-code-2022-day-7/52324
-# Maybe I will revist this later.
 defmodule Day7 do
   @root ["/"]
 
