@@ -1,74 +1,79 @@
 defmodule Day7 do
   @root ["/"]
-  @total_size 70_000_000
-  @space_needed 30_000_000
 
   def part1(input) do
-    store = build_tree(input)
-
-    [@root]
-    |> build_queue([], store)
-    |> Enum.reduce(store, &update_dir_size/2)
+    input
+    |> filetree_with_dir_sizes()
     |> Enum.filter(fn
       {_k, {:dir, size, _paths}} -> size <= 100_000
-      _ -> false
+      {_k, {:file, _size, _paths}} -> false
     end)
     |> Enum.map(fn {_k, {_type, size, _paths}} -> size end)
     |> Enum.sum()
   end
 
-  def update_dir_size(path, store) do
-    {:dir, 0, paths} = Map.get(store, path)
-    size = store |> Map.take(paths) |> Enum.map(fn {_, {_, size, _}} -> size end) |> Enum.sum()
-    Map.put(store, path, {:dir, size, paths})
+  defp filetree_with_dir_sizes(input) do
+    tree = build_tree(input)
+
+    tree
+    |> dirs_fewest_descendents_first()
+    |> Enum.reduce(tree, &put_dir_size/2)
   end
 
-  def build_queue([], queue, _store), do: queue
+  defp put_dir_size(path, tree) do
+    {:dir, nil, paths} = Map.get(tree, path)
+    size = tree |> Map.take(paths) |> Enum.map(fn {_, {_, size, _}} -> size end) |> Enum.sum()
+    Map.put(tree, path, {:dir, size, paths})
+  end
 
-  def build_queue([node | rest], queue, store) do
-    case Map.get(store, node) do
-      {:file, _size, nil} -> build_queue(rest, queue, store)
-      {:dir, _size, paths} -> build_queue(paths ++ rest, [node | queue], store)
+  defp dirs_fewest_descendents_first(tree, to_check \\ [@root], found_dirs \\ [])
+  defp dirs_fewest_descendents_first(_tree, [], found_dirs), do: found_dirs
+
+  defp dirs_fewest_descendents_first(tree, [node | rest], dirs) do
+    case Map.get(tree, node) do
+      {:file, _size, nil} -> dirs_fewest_descendents_first(tree, rest, dirs)
+      {:dir, _size, paths} -> dirs_fewest_descendents_first(tree, paths ++ rest, [node | dirs])
     end
   end
 
-  def build_tree(input, path \\ [], store \\ %{})
-  def build_tree([], _path, store), do: store
-  def build_tree([{:cd, "/"} | rest], _path, store), do: build_tree(rest, @root, store)
-  def build_tree([{:cd, ".."} | rest], [_here | path], store), do: build_tree(rest, path, store)
-  def build_tree([{:cd, dir} | rest], path, store), do: build_tree(rest, [dir | path], store)
+  defp build_tree(input, path \\ [], tree \\ %{})
+  defp build_tree([], _path, tree), do: tree
+  defp build_tree([{:cd, "/"} | rest], _path, tree), do: build_tree(rest, @root, tree)
+  defp build_tree([{:cd, ".."} | rest], [_here | path], tree), do: build_tree(rest, path, tree)
+  defp build_tree([{:cd, dir} | rest], path, tree), do: build_tree(rest, [dir | path], tree)
 
-  def build_tree([{:ls, items} | rest], path, store) do
-    # insert files into store with directory path
-    {paths, store} =
-      Enum.map_reduce(items, store, fn
-        {:dir, name}, store ->
+  defp build_tree([{:ls, items} | rest], path, tree) do
+    {paths, tree} =
+      Enum.map_reduce(items, tree, fn
+        # Create an empty directory for each dir listed
+        # (needed if we we forget to ls inside a dir)
+        {:dir, nil, name}, tree ->
           item_path = [name | path]
-          {item_path, Map.put(store, item_path, {:dir, 0, []})}
+          {item_path, Map.put(tree, item_path, {:dir, nil, []})}
 
-        {:file, size, name}, store ->
+        # Create a file for each file listed
+        {:file, size, name}, tree ->
           item_path = [name | path]
-          {item_path, Map.put(store, item_path, {:file, size, nil})}
+          {item_path, Map.put(tree, item_path, {:file, size, nil})}
       end)
 
-    store = Map.put(store, path, {:dir, 0, paths})
+    # Create current directory with listed children
+    tree = Map.put(tree, path, {:dir, nil, paths})
 
-    build_tree(rest, path, store)
+    build_tree(rest, path, tree)
   end
 
+  @total_size 70_000_000
+  @space_needed 30_000_000
+
   def part2(input) do
-    store = build_tree(input)
+    tree = filetree_with_dir_sizes(input)
 
-    store =
-      [@root]
-      |> build_queue([], store)
-      |> Enum.reduce(store, &update_dir_size/2)
-
-    {:dir, space_used, _} = Map.get(store, @root)
+    {:dir, space_used, _} = Map.get(tree, @root)
     unused_space = @total_size - space_used
     space_to_free = @space_needed - unused_space
 
-    store
+    tree
     |> Enum.filter(&match?({_path, {:dir, _size, _paths}}, &1))
     |> Enum.map(fn {_path, {:dir, size, _paths}} -> size end)
     |> Enum.sort()
@@ -87,16 +92,16 @@ defmodule Day7 do
     end
   end
 
-  def parse_input([]), do: []
-  def parse_input(["$ cd " <> dir | rest]), do: [{:cd, dir} | parse_input(rest)]
+  defp parse_input([]), do: []
+  defp parse_input(["$ cd " <> dir | rest]), do: [{:cd, dir} | parse_input(rest)]
 
-  def parse_input(["$ ls" | rest]) do
+  defp parse_input(["$ ls" | rest]) do
     {listings, rest} = Enum.split_while(rest, &(!match?("$" <> _, &1)))
 
     listings =
       Enum.map(listings, fn
         "dir " <> dir ->
-          {:dir, dir}
+          {:dir, nil, dir}
 
         file ->
           [size, name] = String.split(file)
