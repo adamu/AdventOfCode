@@ -105,7 +105,7 @@ defmodule Day11 do
   end
 
   def part2(_input) do
-    :ok
+    "not implemented"
   end
 
   def input do
@@ -185,4 +185,4 @@ defmodule Day11 do
   end
 end
 
-# Day11.run()
+Day11.run()
