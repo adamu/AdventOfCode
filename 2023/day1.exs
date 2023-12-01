@@ -2,37 +2,37 @@ defmodule Day1 do
   def part1(input) do
     input
     |> Enum.map(fn line ->
-      numbers = String.replace(line, ~r/[^1-9]/, "")
+      numbers = filter_digits(line)
       String.to_integer(String.first(numbers) <> String.last(numbers))
     end)
     |> Enum.sum()
   end
+
+  def filter_digits(<<>>), do: <<>>
+  def filter_digits(<<x, rest::binary>>) when x in ?1..?9, do: <<x>> <> filter_digits(rest)
+  def filter_digits(<<_, rest::binary>>), do: filter_digits(rest)
 
   def part2(input) do
     input
     |> Enum.map(fn line ->
-      numbers =
-        line
-        |> string_to_digits()
-        |> String.replace(~r/[^1-9]/, "")
-
+      numbers = filter_digits2(line)
       String.to_integer(String.first(numbers) <> String.last(numbers))
     end)
     |> Enum.sum()
   end
 
-  def string_to_digits(line) do
-    line
-    |> String.replace("one", "o1e")
-    |> String.replace("two", "t2o")
-    |> String.replace("three", "t3e")
-    |> String.replace("four", "f4r")
-    |> String.replace("five", "f5e")
-    |> String.replace("six", "s6x")
-    |> String.replace("seven", "s7n")
-    |> String.replace("eight", "e8t")
-    |> String.replace("nine", "n9e")
-  end
+  def filter_digits2(<<>>), do: <<>>
+  def filter_digits2(<<x, rest::binary>>) when x in ?1..?9, do: <<x>> <> filter_digits2(rest)
+  def filter_digits2(<<"one", rest::binary>>), do: "1" <> filter_digits2("e" <> rest)
+  def filter_digits2(<<"two", rest::binary>>), do: "2" <> filter_digits2("o" <> rest)
+  def filter_digits2(<<"three", rest::binary>>), do: "3" <> filter_digits2("e" <> rest)
+  def filter_digits2(<<"four", rest::binary>>), do: "4" <> filter_digits2("r" <> rest)
+  def filter_digits2(<<"five", rest::binary>>), do: "5" <> filter_digits2("e" <> rest)
+  def filter_digits2(<<"six", rest::binary>>), do: "6" <> filter_digits2("x" <> rest)
+  def filter_digits2(<<"seven", rest::binary>>), do: "7" <> filter_digits2("n" <> rest)
+  def filter_digits2(<<"eight", rest::binary>>), do: "8" <> filter_digits2("t" <> rest)
+  def filter_digits2(<<"nine", rest::binary>>), do: "9" <> filter_digits2("e" <> rest)
+  def filter_digits2(<<_, rest::binary>>), do: filter_digits2(rest)
 
   def input do
     with [input_filename] <- System.argv(),
