@@ -1,3 +1,4 @@
+#!/usr/bin/env elixir
 defmodule DayREPLACE_ME do
   def part1(input) do
     input
@@ -35,7 +36,7 @@ defmodule DayREPLACE_ME do
   defp run_with_timer(part, fun) do
     {time, result} = :timer.tc(fun)
     IO.puts("Part #{part} (completed in #{format_time(time)}):\n")
-    IO.puts("#{result}\n")
+    IO.puts("#{inspect result}\n")
   end
 
   defp format_time(μsec) when μsec < 1_000, do: "#{μsec}μs"
