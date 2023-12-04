@@ -2,35 +2,28 @@
 defmodule Day4 do
   def part1(input) do
     input
-    |> Enum.map(fn {_id, num_winners} ->
-      case num_winners do
-        0 -> 0
-        num_winners -> 2 ** (num_winners - 1)
-      end
-    end)
+    |> Enum.map(fn 0 -> 0; num_winners -> 2 ** (num_winners - 1) end)
     |> Enum.sum()
   end
 
   def part2(input) do
     input
-    |> Enum.sort_by(fn {id, _num_winners} -> id end)
-    |> Enum.map(fn {_id, num_winners} -> {_num_copies = 1, num_winners} end)
+    |> Enum.map(fn num_winners -> {_num_copies = 1, num_winners} end)
     |> copy()
-    |> Enum.map(fn {num_copies, _num_winners} -> num_copies end)
     |> Enum.sum()
   end
 
   def copy([]), do: []
 
-  def copy([{above_num_copies, num_winners} = current | rest]) do
+  def copy([{num_copies, num_winners} | rest]) do
     {to_copy, left_alone} = Enum.split(rest, num_winners)
 
     copied =
-      Enum.map(to_copy, fn {below_num_copies, num_winners} ->
-        {above_num_copies + below_num_copies, num_winners}
+      Enum.map(to_copy, fn {child_num_copies, num_winners} ->
+        {num_copies + child_num_copies, num_winners}
       end)
 
-    [current | copy(copied ++ left_alone)]
+    [num_copies | copy(copied ++ left_alone)]
   end
 
   def input do
@@ -39,16 +32,12 @@ defmodule Day4 do
       input
       |> String.split("\n", trim: true)
       |> Enum.map(fn line ->
-        [card_id, winning, have] = String.split(line, [": ", " | "])
-        ["Card", id] = String.split(card_id, " ", trim: true)
+        [_card_id, winning, have] = String.split(line, [": ", " | "])
 
-        [winning, have] =
-          for cards <- [winning, have],
-              do: cards |> String.split(" ", trim: true) |> MapSet.new(&String.to_integer/1)
+        winning = winning |> String.split(" ", trim: true) |> MapSet.new()
+        have = have |> String.split(" ", trim: true) |> MapSet.new()
 
-        num_winners = MapSet.intersection(winning, have) |> MapSet.size()
-
-        {String.to_integer(id), num_winners}
+        MapSet.intersection(winning, have) |> MapSet.size()
       end)
     else
       _ -> :error
