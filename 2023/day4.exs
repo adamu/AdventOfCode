@@ -1,8 +1,9 @@
+#!/usr/bin/env elixir
 defmodule Day4 do
   def part1(input) do
     input
-    |> Enum.map(fn {_id, winning, have} ->
-      case MapSet.intersection(winning, have) |> MapSet.size() do
+    |> Enum.map(fn {_id, num_winners} ->
+      case num_winners do
         0 -> 0
         num_winners -> 2 ** (num_winners - 1)
       end
@@ -10,8 +11,26 @@ defmodule Day4 do
     |> Enum.sum()
   end
 
-  def part2(_input) do
-    :ok
+  def part2(input) do
+    input
+    |> Enum.sort_by(fn {id, _num_winners} -> id end)
+    |> Enum.map(fn {_id, num_winners} -> {_num_copies = 1, num_winners} end)
+    |> copy()
+    |> Enum.map(fn {num_copies, _num_winners} -> num_copies end)
+    |> Enum.sum()
+  end
+
+  def copy([]), do: []
+
+  def copy([{above_num_copies, num_winners} = current | rest]) do
+    {to_copy, left_alone} = Enum.split(rest, num_winners)
+
+    copied =
+      Enum.map(to_copy, fn {below_num_copies, num_winners} ->
+        {above_num_copies + below_num_copies, num_winners}
+      end)
+
+    [current | copy(copied ++ left_alone)]
   end
 
   def input do
@@ -27,7 +46,9 @@ defmodule Day4 do
           for cards <- [winning, have],
               do: cards |> String.split(" ", trim: true) |> MapSet.new(&String.to_integer/1)
 
-        {String.to_integer(id), winning, have}
+        num_winners = MapSet.intersection(winning, have) |> MapSet.size()
+
+        {String.to_integer(id), num_winners}
       end)
     else
       _ -> :error
@@ -65,4 +86,4 @@ defmodule Day4 do
   end
 end
 
-# Day4.run()
+Day4.run()
