@@ -24,8 +24,8 @@ defmodule Day5 do
 
     maps
     |> Enum.reduce(seed_ranges, &process_ranges/2)
-    |> Enum.min_by(& &1.first)
-    |> then(& &1.first)
+    |> Enum.map(& &1.first)
+    |> Enum.min()
   end
 
   def process_ranges(_map_ranges, []), do: []
@@ -35,23 +35,20 @@ defmodule Day5 do
       Enum.find(map_ranges, fn {source, _offset} -> not Range.disjoint?(source, item_range) end)
 
     case overlap do
-      nil ->
-        [item_range | process_ranges(map_ranges, rest)]
-
       {source, offset} ->
         to_shift = max(source.first, item_range.first)..min(source.last, item_range.last)
 
-        # ugh. Tidy this up
         remainders =
-          List.flatten([
-            if(item_range.first < source.first,
-              do: [item_range.first..(source.first - 1)],
-              else: []
-            ),
-            if(item_range.last > source.last, do: [(source.last + 1)..item_range.last], else: [])
-          ])
+          [
+            if(item_range.first < source.first, do: item_range.first..(source.first - 1)),
+            if(item_range.last > source.last, do: (source.last + 1)..item_range.last)
+          ]
+          |> Enum.reject(&is_nil/1)
 
         [Range.shift(to_shift, offset) | process_ranges(map_ranges, remainders ++ rest)]
+
+      nil ->
+        [item_range | process_ranges(map_ranges, rest)]
     end
   end
 
