@@ -8,35 +8,53 @@ defmodule Day5 do
 
   def lookup([], item), do: item
 
-  def lookup([{source, dest} | rest], item) do
+  def lookup([{source, offset} | rest], item) do
     if item in source do
-      dest + item - source.first
+      item + offset
     else
       lookup(rest, item)
     end
   end
 
-  def part2(_input) do
-    :ok
+  def part2({seeds, maps}) do
+    seed_ranges =
+      seeds
+      |> Enum.chunk_every(2)
+      |> Enum.map(fn [start, len] -> start..(start + len - 1) end)
+
+    maps
+    |> Enum.reduce(seed_ranges, &process_ranges/2)
+    |> Enum.min_by(& &1.first)
+    |> then(& &1.first)
   end
 
-  # dest range start
-  # source range start
-  # length
-  # no map = same number
+  def process_ranges(_map_ranges, []), do: []
 
-  # could brute force it by building a map
-  # but the ranges are huge, so that won't work
-  # actually need to find if in a range
+  def process_ranges(map_ranges, [item_range | rest]) do
+    overlap =
+      Enum.find(map_ranges, fn {source, _offset} -> not Range.disjoint?(source, item_range) end)
 
-  # given a source
-  # 1) check if it's in a range
-  # 2) if it is, follow the rule, otherwise same number
-  # 3) follow path
-  # well it's mlogn but it should work?
-  # store a list of ranges
-  # check each seed to see if it's in the range, if it is, follow it, if not, name number
-  # we could binsearch the range but let's just do it linear for now, there aren't many seeds
+    case overlap do
+      nil ->
+        [item_range | process_ranges(map_ranges, rest)]
+
+      {source, offset} ->
+        to_shift = max(source.first, item_range.first)..min(source.last, item_range.last)
+
+        # ugh. Tidy this up
+        remainders =
+          List.flatten([
+            if(item_range.first < source.first,
+              do: [item_range.first..(source.first - 1)],
+              else: []
+            ),
+            if(item_range.last > source.last, do: [(source.last + 1)..item_range.last], else: [])
+          ])
+
+        [Range.shift(to_shift, offset) | process_ranges(map_ranges, remainders ++ rest)]
+    end
+  end
+
   def input do
     with [input_filename] <- System.argv(),
          {:ok, input} <- File.read(input_filename) do
@@ -51,7 +69,7 @@ defmodule Day5 do
           |> Enum.map(&String.to_integer/1)
           |> Enum.chunk_every(3)
           |> Enum.map(fn [dest, source, offset] ->
-            {source..(source + offset), dest}
+            {source..(source + offset), dest - source}
           end)
         end)
 
@@ -80,7 +98,7 @@ defmodule Day5 do
   defp run_with_timer(part, fun) do
     {time, result} = :timer.tc(fun)
     IO.puts("Part #{part} (completed in #{format_time(time)}):\n")
-    IO.puts("#{inspect(result)}\n")
+    IO.puts("#{inspect(result, charlists: :as_lists)}\n")
   end
 
   defp format_time(μsec) when μsec < 1_000, do: "#{μsec}μs"
@@ -92,4 +110,4 @@ defmodule Day5 do
   end
 end
 
-# Day5.run()
+Day5.run()
