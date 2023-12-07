@@ -66,4 +66,4 @@ defmodule Day6 do
   end
 end
 
-# Day6.run()
+Day6.run()
