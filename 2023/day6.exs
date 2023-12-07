@@ -2,17 +2,22 @@
 defmodule Day6 do
   def part1(input) do
     input
-    |> Enum.map(fn {race, record} ->
-      scores = for n <- 1..div(race, 2), do: n * (race - n)
-      [_middle | rev_no_middle] = reversed = Enum.reverse(scores)
-      scores = scores ++ if rem(race, 2) == 1, do: reversed, else: rev_no_middle
-      Enum.count(scores, fn score -> score > record end)
-    end)
+    |> Enum.map(fn line -> Enum.map(line, &String.to_integer/1) end)
+    |> Enum.zip()
+    |> Enum.map(fn {race, record} -> count_winning(race, record) end)
     |> Enum.product()
   end
 
-  def part2(_input) do
-    :ok
+  def count_winning(race, record) do
+    scores = for n <- 1..div(race, 2), do: n * (race - n)
+    [_middle | rev_no_middle] = reversed = Enum.reverse(scores)
+    scores = scores ++ if rem(race, 2) == 1, do: reversed, else: rev_no_middle
+    Enum.count(scores, fn score -> score > record end)
+  end
+
+  def part2(input) do
+    [race, record] = Enum.map(input, fn line -> line |> Enum.join() |> String.to_integer() end)
+    count_winning(race, record)
   end
 
   def input do
@@ -24,9 +29,7 @@ defmodule Day6 do
         line
         |> String.split()
         |> Enum.drop(1)
-        |> Enum.map(&String.to_integer/1)
       end)
-      |> Enum.zip()
     else
       _ -> :error
     end
