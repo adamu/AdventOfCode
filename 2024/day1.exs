@@ -4,11 +4,8 @@ defmodule Day1 do
     list1 = Enum.sort(list1)
     list2 = Enum.sort(list2)
 
-    distances(list1, list2) |> Enum.sum()
+    Enum.zip_with(list1, list2, &abs(&1 - &2)) |> Enum.sum()
   end
-
-  def distances([], []), do: []
-  def distances([h1 | t1], [h2 | t2]), do: [abs(h1 - h2) | distances(t1, t2)]
 
   def part2({list1, list2}) do
     frequencies = Enum.frequencies(list2)
