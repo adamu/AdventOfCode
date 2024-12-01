@@ -1,3 +1,4 @@
+#!/usr/bin/env elixir
 defmodule Day8 do
   def part1({instructions, network}) do
     instructions
@@ -8,24 +9,24 @@ defmodule Day8 do
     end)
   end
 
-  # Runs forever.
-  # Need a better answer. Start at the end and validate can get there or something?
   def part2({instructions, network}) do
-    starting_nodes =
-      network
-      |> Map.keys()
-      |> Enum.filter(&match?(<<_::binary-2, "A">>, &1))
-
-    instructions
-    |> Stream.cycle()
-    |> Enum.reduce_while({starting_nodes, 0}, fn side, {current_nodes, count} ->
-      if Enum.all?(current_nodes, &match?(<<_::binary-2, "Z">>, &1)) do
-        {:halt, count}
-      else
-        next_nodes = Enum.map(current_nodes, fn node -> elem(network[node], side) end)
-        {:cont, {next_nodes, count + 1}}
-      end
+    # Following the algorithm from the question naively seems to take too long, so we need to
+    # find a shortcut.
+    # It seems that each ghost runs in a cycle, so we can solve the number of steps for each
+    # ghost's path, and then find the lowest common multiple of those lengths, which will
+    # be the first time they arrive at the final spaces together.
+    network
+    |> Map.keys()
+    |> Enum.filter(&match?(<<_::binary-2, "A">>, &1))
+    |> Enum.map(fn start ->
+      instructions
+      |> Stream.cycle()
+      |> Enum.reduce_while({start, 0}, fn
+        _side, {<<_::binary-2, "Z">>, count} -> {:halt, count}
+        side, {node, count} -> {:cont, {elem(network[node], side), count + 1}}
+      end)
     end)
+    |> Enum.reduce(fn a, b -> div(a * b, Integer.gcd(a, b)) end)
   end
 
   def input do
