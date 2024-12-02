@@ -21,8 +21,7 @@ defmodule Day2 do
   def part2(reports) do
     Enum.count(reports, fn report ->
       Enum.find_value(0..(length(report) - 1), false, fn dampen ->
-        {_, dampened} = List.pop_at(report, dampen)
-        check_report(dampened)
+        report |> List.delete_at(dampen) |> check_report()
       end)
     end)
   end
