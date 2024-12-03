@@ -7,12 +7,12 @@ defmodule Day3 do
   end
 
   def part2(input) do
-    Regex.scan(~r/mul\((\d+),(\d+)\)|(do\(\))|(don't\(\))/, input, capture: :all_but_first)
+    Regex.scan(~r/mul\((\d+),(\d+)\)|do\(\)|don't\(\)/, input)
     |> Enum.reduce({0, :process}, fn
-      ["", "", "do()"], {sum, _} -> {sum, :process}
-      ["", "", "", "don't()"], {sum, _} -> {sum, :skip}
+      ["do()"], {sum, _} -> {sum, :process}
+      ["don't()"], {sum, _} -> {sum, :skip}
       _, {sum, :skip} -> {sum, :skip}
-      [a, b], {sum, :process} -> {sum + String.to_integer(a) * String.to_integer(b), :process}
+      [_, a, b], {sum, :process} -> {sum + String.to_integer(a) * String.to_integer(b), :process}
     end)
     |> elem(0)
   end
