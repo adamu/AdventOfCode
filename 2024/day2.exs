@@ -20,7 +20,7 @@ defmodule Day2 do
 
   def part2(reports) do
     Enum.count(reports, fn report ->
-      Enum.find_value(0..(length(report) - 1), false, fn dampen ->
+      Enum.any?(0..(length(report) - 1), fn dampen ->
         report |> List.delete_at(dampen) |> check_report()
       end)
     end)
